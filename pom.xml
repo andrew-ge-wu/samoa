@@ -120,7 +120,7 @@
         <samza.version>0.7.0</samza.version>
         <slf4j-log4j12.version>1.7.2</slf4j-log4j12.version>
         <slf4j-simple.version>1.7.5</slf4j-simple.version>
-        <storm.version>0.8.2</storm.version>
+        <storm.version>0.9.2-incubating</storm.version>
     </properties>
 
     <dependencies>
