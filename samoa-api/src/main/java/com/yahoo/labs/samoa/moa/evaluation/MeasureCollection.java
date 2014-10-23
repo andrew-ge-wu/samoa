@@ -164,7 +164,7 @@ public abstract class MeasureCollection extends AbstractMOAObject{
 
          if(size > 0){
              if(size%2 == 1)
-                 return sortedValues[index].get((int)(size/2));
+                 return sortedValues[index].get(size/2);
              else
                  return (sortedValues[index].get((size-1)/2)+sortedValues[index].get((size-1)/2+1))/2.0;
          }

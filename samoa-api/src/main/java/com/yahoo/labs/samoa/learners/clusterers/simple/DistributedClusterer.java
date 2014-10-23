@@ -84,7 +84,7 @@ public final class DistributedClusterer implements Learner, Configurable {
 
         // Local Clustering
         learnerP = new LocalClustererProcessor();
-        LocalClustererAdapter learner = (LocalClustererAdapter) this.learnerOption.getValue();
+        LocalClustererAdapter learner = this.learnerOption.getValue();
         learner.setDataset(this.dataset);
         learnerP.setLearner(learner);
         builder.addProcessor(learnerP, this.paralellismOption.getValue());
@@ -93,7 +93,7 @@ public final class DistributedClusterer implements Learner, Configurable {
 
         // Global Clustering
         LocalClustererProcessor globalClusteringCombinerP = new LocalClustererProcessor();
-        LocalClustererAdapter globalLearner = (LocalClustererAdapter) this.learnerOption.getValue();
+        LocalClustererAdapter globalLearner = this.learnerOption.getValue();
         globalLearner.setDataset(this.dataset);
         globalClusteringCombinerP.setLearner(learner);
         builder.addProcessor(globalClusteringCombinerP, 1);

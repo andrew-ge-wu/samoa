@@ -184,7 +184,7 @@ public class Attribute implements Serializable{
                 count++;
             }
         }
-        Integer val = (Integer) this.valuesStringAttribute.get(value);
+        Integer val = this.valuesStringAttribute.get(value);
         if (val == null) {
             return -1;
         } else {

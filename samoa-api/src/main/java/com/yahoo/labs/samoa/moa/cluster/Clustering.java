@@ -65,7 +65,7 @@ public class Clustering extends AbstractMOAObject{
         for (Instance point : points) {
             int clusterid = (int)point.classValue();
             if(clusterid == noiseLabel) continue;
-            sorted_points[labelMap.get(clusterid)].add((Instance)point);
+            sorted_points[labelMap.get(clusterid)].add(point);
         }
         this.clusters = new AutoExpandVector<>();
         for (int i = 0; i < numClasses; i++) {
@@ -107,13 +107,13 @@ public class Clustering extends AbstractMOAObject{
             while(pointInCluster.size()>0){
                 ArrayList<Instance> micro_points = new ArrayList<>();
                 for (int j = 0; j < initMinPoints && !pointInCluster.isEmpty(); j++) {
-                    micro_points.add((Instance)pointInCluster.get(0));
+                    micro_points.add(pointInCluster.get(0));
                     pointInCluster.remove(0);
                 }
                 if(micro_points.size() > 0){
                     SphereCluster s = new SphereCluster(micro_points,dim);
                     for (int c = 0; c < microByClass.size(); c++) {
-                        if(((SphereCluster)microByClass.get(c)).overlapRadiusDegree(s) > overlapThreshold ){
+                        if(microByClass.get(c).overlapRadiusDegree(s) > overlapThreshold ){
                             micro_points.addAll(pointInMicroClusters.get(c));
                             s = new SphereCluster(micro_points,dim);
                             pointInMicroClusters.remove(c);

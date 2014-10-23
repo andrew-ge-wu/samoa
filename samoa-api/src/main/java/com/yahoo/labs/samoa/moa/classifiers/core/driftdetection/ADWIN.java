@@ -521,7 +521,7 @@ public class ADWIN extends AbstractMOAObject {
                             blnExit = true;
                             break;
                         }
-                        double absvalue = (double) (u0 / n0) - (u1 / n1);       //n1<WIDTH-mintMinWinLength-1
+                        double absvalue = u0 / n0 - (u1 / n1);       //n1<WIDTH-mintMinWinLength-1
                         if ((n1 > mintMinWinLength + 1 && n0 > mintMinWinLength + 1) && // Diference NEGATIVE
                                 //if(
                                 blnCutexpression(n0, n1, u0, u1, v0, v1, absvalue, delta)) {

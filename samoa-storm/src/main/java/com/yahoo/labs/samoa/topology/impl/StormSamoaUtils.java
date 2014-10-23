@@ -99,7 +99,7 @@ public class StormSamoaUtils {
         Task task = null;
         try {
             logger.debug("Providing task [{}]", cliString);
-            task = (Task) ClassOption.cliStringToObject(cliString, Task.class, null);
+            task = ClassOption.cliStringToObject(cliString, Task.class, null);
         } catch (Exception e) {
             logger.warn("Fail in initializing the task!");
             e.printStackTrace();

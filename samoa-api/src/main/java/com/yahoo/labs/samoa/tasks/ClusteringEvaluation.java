@@ -116,7 +116,7 @@ public class ClusteringEvaluation implements Task, Configurable {
 
         // instantiate ClusteringEntranceProcessor and its output stream (sourceStream)
         source = new ClusteringEntranceProcessor();
-        InstanceStream streamTrain = (InstanceStream) this.streamTrainOption.getValue();
+        InstanceStream streamTrain = this.streamTrainOption.getValue();
         source.setStreamSource(streamTrain);
         builder.addEntranceProcessor(source);
         source.setSamplingThreshold(samplingThresholdOption.getValue());
@@ -137,7 +137,7 @@ public class ClusteringEvaluation implements Task, Configurable {
         logger.debug("Successfully instantiated Distributor");
        
         // instantiate learner and connect it to distributorStream
-        learner = (Learner) this.learnerOption.getValue();
+        learner = this.learnerOption.getValue();
         learner.init(builder, source.getDataset(), 1);
         builder.connectInputShuffleStream(distributorStream, learner.getInputProcessor());
         logger.debug("Sucessfully instantiated Learner");

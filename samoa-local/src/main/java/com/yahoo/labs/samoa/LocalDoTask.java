@@ -78,7 +78,7 @@ public class LocalDoTask {
 
         Task task = null;
         try {
-            task = (Task) ClassOption.cliStringToObject(cliString.toString(), Task.class, extraOptions);
+            task = ClassOption.cliStringToObject(cliString.toString(), Task.class, extraOptions);
             logger.info("Sucessfully instantiating {}", task.getClass().getCanonicalName());
         } catch (Exception e) {
             logger.error("Fail to initialize the task", e);

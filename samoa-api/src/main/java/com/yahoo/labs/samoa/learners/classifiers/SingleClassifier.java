@@ -71,7 +71,7 @@ public final class SingleClassifier implements Learner, AdaptiveLearner, Configu
 	protected void setLayout() {		
 		learnerP = new LocalLearnerProcessor();
                 learnerP.setChangeDetector(this.getChangeDetector());
-                LocalLearner learner = (LocalLearner) this.learnerOption.getValue();
+                LocalLearner learner = this.learnerOption.getValue();
                 learner.setDataset(this.dataset);
 		learnerP.setLearner(learner);
                 

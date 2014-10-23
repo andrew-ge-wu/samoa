@@ -152,7 +152,7 @@ public class HyperplaneGenerator extends AbstractOptionHandler implements Instan
 
     private void addDrift() {
         for (int i = 0; i < this.numDriftAttsOption.getValue(); i++) {
-            this.weights[i] += (double) ((double) sigma[i]) * ((double) this.magChangeOption.getValue());
+            this.weights[i] += (double) sigma[i] * this.magChangeOption.getValue();
             if (// this.weights[i] >= 1.0 || this.weights[i] <= 0.0 ||
             (1 + (this.instanceRandom.nextInt(100))) <= this.sigmaPercentageOption.getValue()) {
                 this.sigma[i] *= -1;

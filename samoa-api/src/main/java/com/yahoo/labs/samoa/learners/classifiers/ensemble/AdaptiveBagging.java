@@ -96,7 +96,7 @@ public class AdaptiveBagging implements Learner , Configurable {
                 this.builder.addProcessor(distributorP, 1);
 		        
                 //instantiate classifier 
-                classifier = (Learner) this.baseLearnerOption.getValue();
+                classifier = this.baseLearnerOption.getValue();
                 if (classifier instanceof AdaptiveLearner) {
                     // logger.info("Building an AdaptiveLearner {}", classifier.getClass().getName());
                     AdaptiveLearner ada = (AdaptiveLearner) classifier;

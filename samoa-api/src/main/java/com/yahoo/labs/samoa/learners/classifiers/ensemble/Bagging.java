@@ -85,7 +85,7 @@ public class Bagging implements Learner , Configurable {
                 this.builder.addProcessor(distributorP, 1);
 		        
                 //instantiate classifier 
-                classifier = (Learner) this.baseLearnerOption.getValue();
+                classifier = this.baseLearnerOption.getValue();
                 classifier.init(builder, this.dataset, sizeEnsemble);
         
 		PredictionCombinerProcessor predictionCombinerP= new PredictionCombinerProcessor();

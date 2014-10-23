@@ -68,7 +68,7 @@ public final class SingleLearner implements Learner, Configurable {
 
 	protected void setLayout() {		
 		learnerP = new LocalClustererProcessor();
-                LocalClustererAdapter learner = (LocalClustererAdapter) this.learnerOption.getValue();
+                LocalClustererAdapter learner = this.learnerOption.getValue();
                 learner.setDataset(this.dataset);
 		learnerP.setLearner(learner);
                 

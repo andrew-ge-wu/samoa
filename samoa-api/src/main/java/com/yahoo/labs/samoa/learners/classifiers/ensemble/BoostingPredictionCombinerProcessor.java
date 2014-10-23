@@ -133,7 +133,7 @@ public class BoostingPredictionCombinerProcessor extends PredictionCombinerProce
             double k = true ? lambda_d : MiscUtils.poisson(lambda_d, this.random);
             Instance inst = inEvent.getInstance();
             if (k > 0.0) {
-                Instance weightedInst = (Instance) inst.copy();
+                Instance weightedInst = inst.copy();
                 weightedInst.setWeight(inst.weight() * k);
                 //this.ensemble[i].trainOnInstance(weightedInst);
                 boolean isTraining = true;

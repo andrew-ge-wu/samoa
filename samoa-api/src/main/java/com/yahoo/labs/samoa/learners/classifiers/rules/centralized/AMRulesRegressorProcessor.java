@@ -304,12 +304,12 @@ public class AMRulesRegressorProcessor implements Processor {
 				}
 			}  
 		}
-		if (statistics!=null && ((RuleActiveRegressionNode)r.getLearningNode()).getTargetMean()!=null)
+		if (statistics!=null && r.getLearningNode().getTargetMean()!=null)
 		{
 			double mean;
 			if(statistics[0]>0){
 				mean=statistics[1]/statistics[0];
-				((RuleActiveRegressionNode)r.getLearningNode()).getTargetMean().reset(mean, (long)statistics[0]); 
+				r.getLearningNode().getTargetMean().reset(mean, (long)statistics[0]);
 			}
 		}
 		return r;

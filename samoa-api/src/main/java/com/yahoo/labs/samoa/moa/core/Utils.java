@@ -916,7 +916,7 @@ public final class Utils {
     //convert optionsVec to an array of String
     String[] options = new String[optionsVec.size()];
     for (i = 0; i < optionsVec.size(); i++) {
-      options[i] = (String)optionsVec.elementAt(i);
+      options[i] = optionsVec.elementAt(i);
     }
     return options;
   }    
@@ -1373,7 +1373,7 @@ public final class Utils {
   public static /*@pure@*/ int[] sort(/*@non_null@*/ double[] array) {
 
     int[] index = new int[array.length];
-    array = (double[])array.clone();
+    array = array.clone();
     for (int i = 0; i < index.length; i++) {
       index[i] = i;
       if (Double.isNaN(array[i])) {
@@ -1402,7 +1402,7 @@ public final class Utils {
     int[] helpIndex;
     int numEqual;
     
-    array = (double[])array.clone();
+    array = array.clone();
     for (int i = 0; i < index.length; i++) {
       index[i] = i;
       if (Double.isNaN(array[i])) {

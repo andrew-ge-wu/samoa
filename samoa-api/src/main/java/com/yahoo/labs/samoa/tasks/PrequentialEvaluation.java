@@ -144,12 +144,12 @@ public class PrequentialEvaluation implements Task, Configurable {
         // preqStarter.setInputStream(sourcePiOutputStream);
 
         // instantiate classifier and connect it to sourcePiOutputStream
-        classifier = (Learner) this.learnerOption.getValue();
+        classifier = this.learnerOption.getValue();
         classifier.init(builder, preqSource.getDataset(), 1);
         builder.connectInputShuffleStream(sourcePiOutputStream, classifier.getInputProcessor());
         logger.debug("Sucessfully instantiating Classifier");
 
-        PerformanceEvaluator evaluatorOptionValue = (PerformanceEvaluator) this.evaluatorOption.getValue();
+        PerformanceEvaluator evaluatorOptionValue = this.evaluatorOption.getValue();
         if (!PrequentialEvaluation.isLearnerAndEvaluatorCompatible(classifier, evaluatorOptionValue)) {
         	evaluatorOptionValue = getDefaultPerformanceEvaluatorForLearner(classifier);
         }

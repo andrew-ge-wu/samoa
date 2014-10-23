@@ -55,7 +55,7 @@ public class LocalThreadsDoTask {
 
         Task task = null;
         try {
-            task = (Task) ClassOption.cliStringToObject(cliString.toString(), Task.class, null);
+            task = ClassOption.cliStringToObject(cliString.toString(), Task.class, null);
             logger.info("Sucessfully instantiating {}", task.getClass().getCanonicalName());
         } catch (Exception e) {
             logger.error("Fail to initialize the task", e);

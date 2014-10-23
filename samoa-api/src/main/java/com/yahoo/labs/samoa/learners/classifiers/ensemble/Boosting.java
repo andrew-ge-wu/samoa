@@ -87,7 +87,7 @@ public class Boosting implements Learner , Configurable {
                 this.builder.addProcessor(distributorP, 1);
 	
                 //instantiate classifier 
-                classifier = (Learner) this.baseLearnerOption.getValue();
+                classifier = this.baseLearnerOption.getValue();
                 classifier.init(builder, this.dataset, sizeEnsemble);
 		
 		BoostingPredictionCombinerProcessor predictionCombinerP= new BoostingPredictionCombinerProcessor();
