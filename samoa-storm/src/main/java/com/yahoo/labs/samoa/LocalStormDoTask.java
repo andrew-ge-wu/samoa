@@ -19,18 +19,16 @@ package com.yahoo.labs.samoa;
  * limitations under the License.
  * #L%
  */
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import backtype.storm.Config;
+import backtype.storm.LocalCluster;
+import com.yahoo.labs.samoa.topology.impl.StormSamoaUtils;
+import com.yahoo.labs.samoa.topology.impl.StormTopology;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backtype.storm.Config;
-import backtype.storm.utils.Utils;
-
-import com.yahoo.labs.samoa.topology.impl.StormSamoaUtils;
-import com.yahoo.labs.samoa.topology.impl.StormTopology;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * The main class to execute a SAMOA task in LOCAL mode in Storm.
@@ -66,7 +64,7 @@ public class LocalStormDoTask {
         //local mode
         conf.setMaxTaskParallelism(numWorker);
 
-        backtype.storm.LocalCluster cluster = new backtype.storm.LocalCluster();
+        LocalCluster cluster =  new LocalCluster();
         cluster.submitTopology(topologyName, conf, stormTopo.getStormBuilder().createTopology());
 
         backtype.storm.utils.Utils.sleep(600 * 1000);
