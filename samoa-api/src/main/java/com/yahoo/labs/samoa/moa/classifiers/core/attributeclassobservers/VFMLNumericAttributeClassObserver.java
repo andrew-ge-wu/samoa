@@ -65,7 +65,7 @@ public class VFMLNumericAttributeClassObserver extends AbstractOptionHandler
         public double boundaryWeight;
     }
 
-    protected List<Bin> binList = new ArrayList<Bin>();
+    protected List<Bin> binList = new ArrayList<>();
 
     public IntOption numBinsOption = new IntOption("numBins", 'n',
         "The number of bins.", 10, 1, Integer.MAX_VALUE);

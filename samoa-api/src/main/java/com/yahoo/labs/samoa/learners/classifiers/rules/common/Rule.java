@@ -45,7 +45,7 @@ public abstract class Rule extends AbstractMOAObject {
 	 * Constructor
 	 */
 	public Rule() {
-		this.nodeList = new LinkedList<RuleSplitNode>();
+		this.nodeList = new LinkedList<>();
 	}
 	
 	/*

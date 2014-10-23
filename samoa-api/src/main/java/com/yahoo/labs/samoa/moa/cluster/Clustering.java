@@ -21,6 +21,7 @@ package com.yahoo.labs.samoa.moa.cluster;
  */
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import com.yahoo.labs.samoa.moa.AbstractMOAObject;
@@ -34,14 +35,12 @@ public class Clustering extends AbstractMOAObject{
     private AutoExpandVector<Cluster> clusters;
 
     public Clustering() {
-        this.clusters = new AutoExpandVector<Cluster>();
+        this.clusters = new AutoExpandVector<>();
     }
 
     public Clustering( Cluster[] clusters ) {
-        this.clusters = new AutoExpandVector<Cluster>();
-        for (int i = 0; i < clusters.length; i++) {
-            this.clusters.add(clusters[i]);
-        }
+        this.clusters = new AutoExpandVector<>();
+        Collections.addAll(this.clusters, clusters);
     }
 
     public Clustering(List<? extends Instance> points){
@@ -53,7 +52,7 @@ public class Clustering extends AbstractMOAObject{
         
         Attribute classLabel = points.get(0).dataset().classAttribute();
         int lastLabelIndex = classLabel.numValues() - 1;
-        if (classLabel.value(lastLabelIndex) == "noise") {
+        if (classLabel.value(lastLabelIndex).equals("noise")) {
         	noiseLabel = lastLabelIndex;
         } else {
         	noiseLabel = -1;
@@ -61,14 +60,14 @@ public class Clustering extends AbstractMOAObject{
 
         ArrayList<Instance>[] sorted_points = (ArrayList<Instance>[]) new ArrayList[numClasses];
         for (int i = 0; i < numClasses; i++) {
-            sorted_points[i] = new ArrayList<Instance>();
+            sorted_points[i] = new ArrayList<>();
         }
         for (Instance point : points) {
             int clusterid = (int)point.classValue();
             if(clusterid == noiseLabel) continue;
             sorted_points[labelMap.get(clusterid)].add((Instance)point);
         }
-        this.clusters = new AutoExpandVector<Cluster>();
+        this.clusters = new AutoExpandVector<>();
         for (int i = 0; i < numClasses; i++) {
             if(sorted_points[i].size()>0){
                 SphereCluster s = new SphereCluster(sorted_points[i],dim);
@@ -88,7 +87,7 @@ public class Clustering extends AbstractMOAObject{
 
         ArrayList<DataPoint>[] sorted_points = (ArrayList<DataPoint>[]) new ArrayList[numClasses];
         for (int i = 0; i < numClasses; i++) {
-            sorted_points[i] = new ArrayList<DataPoint>();
+            sorted_points[i] = new ArrayList<>();
         }
         for (DataPoint point : points) {
             int clusterid = (int)point.classValue();
@@ -97,16 +96,16 @@ public class Clustering extends AbstractMOAObject{
             num++;
         }
 
-        clusters = new AutoExpandVector<Cluster>();
+        clusters = new AutoExpandVector<>();
         int microID = 0;
         for (int i = 0; i < numClasses; i++) {
-            ArrayList<SphereCluster> microByClass = new ArrayList<SphereCluster>();
-            ArrayList<DataPoint> pointInCluster = new ArrayList<DataPoint>();
+            ArrayList<SphereCluster> microByClass = new ArrayList<>();
+            ArrayList<DataPoint> pointInCluster = new ArrayList<>();
             ArrayList<ArrayList<Instance>> pointInMicroClusters = new ArrayList();
 
             pointInCluster.addAll(sorted_points[i]);
             while(pointInCluster.size()>0){
-                ArrayList<Instance> micro_points = new ArrayList<Instance>();
+                ArrayList<Instance> micro_points = new ArrayList<>();
                 for (int j = 0; j < initMinPoints && !pointInCluster.isEmpty(); j++) {
                     micro_points.add((Instance)pointInCluster.get(0));
                     pointInCluster.remove(0);
@@ -155,9 +154,9 @@ public class Clustering extends AbstractMOAObject{
                     }
                 }
             }
-            for (int j = 0; j < microByClass.size(); j++) {
-                microByClass.get(j).setGroundTruth(sorted_points[i].get(0).classValue());
-                clusters.add(microByClass.get(j));
+            for (SphereCluster microByClas : microByClass) {
+                microByClas.setGroundTruth(sorted_points[i].get(0).classValue());
+                clusters.add(microByClas);
             }
 
         }
@@ -172,17 +171,16 @@ public class Clustering extends AbstractMOAObject{
      * @return an array with the min and max class label value
      */
     public static HashMap<Integer, Integer> classValues(List<? extends Instance> points){
-        HashMap<Integer,Integer> classes = new HashMap<Integer, Integer>();
+        HashMap<Integer,Integer> classes = new HashMap<>();
         int workcluster = 0;
         boolean hasnoise = false;
-        for (int i = 0; i < points.size(); i++) {
-            int label = (int) points.get(i).classValue();
-            if(label == -1){
+        for (Instance point : points) {
+            int label = (int) point.classValue();
+            if (label == -1) {
                 hasnoise = true;
-            }
-            else{
-                if(!classes.containsKey(label)){
-                    classes.put(label,workcluster);
+            } else {
+                if (!classes.containsKey(label)) {
+                    classes.put(label, workcluster);
                     workcluster++;
                 }
             }
@@ -262,8 +260,8 @@ public class Clustering extends AbstractMOAObject{
 
     public double getMaxInclusionProbability(Instance point) {
         double maxInclusion = 0.0;
-        for (int i = 0; i < clusters.size(); i++) {
-            maxInclusion = Math.max(clusters.get(i).getInclusionProbability(point),
+        for (Cluster cluster : clusters) {
+            maxInclusion = Math.max(cluster.getInclusionProbability(point),
                     maxInclusion);
         }
         return maxInclusion;

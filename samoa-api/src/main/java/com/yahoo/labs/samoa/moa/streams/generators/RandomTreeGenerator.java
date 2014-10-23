@@ -199,7 +199,7 @@ public class RandomTreeGenerator extends AbstractOptionHandler implements
 
     protected void generateRandomTree() {
         Random treeRand = new Random(this.treeRandomSeedOption.getValue());
-        ArrayList<Integer> nominalAttCandidates = new ArrayList<Integer>(
+        ArrayList<Integer> nominalAttCandidates = new ArrayList<>(
                 this.numNominalsOption.getValue());
         for (int i = 0; i < this.numNominalsOption.getValue(); i++) {
             nominalAttCandidates.add(i);
@@ -229,7 +229,7 @@ public class RandomTreeGenerator extends AbstractOptionHandler implements
         if (chosenAtt < nominalAttCandidates.size()) {
             node.splitAttIndex = nominalAttCandidates.get(chosenAtt);
             node.children = new Node[this.numValsPerNominalOption.getValue()];
-            ArrayList<Integer> newNominalCandidates = new ArrayList<Integer>(
+            ArrayList<Integer> newNominalCandidates = new ArrayList<>(
                     nominalAttCandidates);
             newNominalCandidates.remove(new Integer(node.splitAttIndex));
             newNominalCandidates.trimToSize();

@@ -27,17 +27,9 @@ package com.yahoo.labs.samoa.moa.core;
  * #L%
  */
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.lang.reflect.Array;
-import java.net.URL;
 import java.text.BreakIterator;
-import java.util.Enumeration;
-import java.util.Properties;
 import java.util.Random;
 import java.util.Vector;
 
@@ -137,7 +129,7 @@ public final class Utils {
    */
   public static String removeSubstring(String inString, String substring) {
 
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
     int oldLoc = 0, loc = 0;
     while ((loc = inString.indexOf(substring, oldLoc))!= -1) {
       result.append(inString.substring(oldLoc, loc));
@@ -159,7 +151,7 @@ public final class Utils {
   public static String replaceSubstring(String inString, String subString,
 					String replaceString) {
 
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
     int oldLoc = 0, loc = 0;
     while ((loc = inString.indexOf(subString, oldLoc))!= -1) {
       result.append(inString.substring(oldLoc, loc));
@@ -276,7 +268,7 @@ public final class Utils {
       
       return stringBuffer.toString().trim();
     }
-    return new String("" + value);
+    return "" + value;
   }
 
   /**
@@ -443,17 +435,17 @@ public final class Utils {
     throws Exception {
     
     int illegalOptionsFound = 0;
-    StringBuffer text = new StringBuffer();
+    StringBuilder text = new StringBuilder();
 
     if (options == null) {
       return;
     }
-    for (int i = 0; i < options.length; i++) {
-      if (options[i].length() > 0) {
-	illegalOptionsFound++;
-	text.append(options[i] + ' ');
+      for (String option : options) {
+          if (option.length() > 0) {
+              illegalOptionsFound++;
+              text.append(option).append(' ');
+          }
       }
-    }
     if (illegalOptionsFound > 0) {
       throw new Exception("Illegal options: " + text);
     }
@@ -534,7 +526,7 @@ public final class Utils {
 	  throw new Exception("No value given for -" + flag + " option.");
 	}
 	options[i] = "";
-	newString = new String(options[i + 1]);
+	newString = options[i + 1];
 	options[i + 1] = "";
 	return newString;
       }
@@ -647,11 +639,11 @@ public final class Utils {
     if (string.startsWith("'") && string.endsWith("'")) {
       string = string.substring(1, string.length() - 1);
       
-      if ((string.indexOf("\\n") != -1) || (string.indexOf("\\r") != -1) || 
-	  (string.indexOf("\\'") != -1) || (string.indexOf("\\\"") != -1) || 
-	  (string.indexOf("\\\\") != -1) || 
-	  (string.indexOf("\\t") != -1) || (string.indexOf("\\%") != -1) ||
-	  (string.indexOf("\\u001E") != -1)) {
+      if ((string.contains("\\n")) || (string.contains("\\r")) ||
+	  (string.contains("\\'")) || (string.contains("\\\"")) ||
+	  (string.contains("\\\\")) ||
+	  (string.contains("\\t")) || (string.contains("\\%")) ||
+	  (string.contains("\\u001E"))) {
 	string = unbackQuoteChars(string);
       }
     }
@@ -834,7 +826,7 @@ public final class Utils {
     int pos[] = new int[charsFind.length];
     int	curPos;
     
-    String str = new String(string);
+    String str = string;
     newStringBuffer = new StringBuffer();
     while (str.length() > 0) {
       // get positions and closest character to replace
@@ -874,8 +866,8 @@ public final class Utils {
    */
   public static String[] splitOptions(String quotedOptionString) throws Exception{
 
-    Vector<String> optionsVec = new Vector<String>();
-    String str = new String(quotedOptionString);
+    Vector<String> optionsVec = new Vector<>();
+    String str = quotedOptionString;
     int i;
     
     while (true){
@@ -939,24 +931,24 @@ public final class Utils {
   public static String joinOptions(String[] optionArray) {
 
     String optionString = "";
-    for (int i = 0; i < optionArray.length; i++) {
-      if (optionArray[i].equals("")) {
-	continue;
+      for (String anOptionArray : optionArray) {
+          if (anOptionArray.equals("")) {
+              continue;
+          }
+          boolean escape = false;
+          for (int n = 0; n < anOptionArray.length(); n++) {
+              if (Character.isWhitespace(anOptionArray.charAt(n))) {
+                  escape = true;
+                  break;
+              }
+          }
+          if (escape) {
+              optionString += '"' + backQuoteChars(anOptionArray) + '"';
+          } else {
+              optionString += anOptionArray;
+          }
+          optionString += " ";
       }
-      boolean escape = false;
-      for (int n = 0; n < optionArray[i].length(); n++) {
-	if (Character.isWhitespace(optionArray[i].charAt(n))) {
-	  escape = true;
-	  break;
-	}
-      }
-      if (escape) {
-	optionString += '"' + backQuoteChars(optionArray[i]) + '"';
-      } else {
-	optionString += optionArray[i];
-      }
-      optionString += " ";
-    }
     return optionString.trim();
   }
   
@@ -972,10 +964,10 @@ public final class Utils {
     
     int total = 0;
     double x = 0;
-    for (int j = 0; j < counts.length; j++) {
-      x -= xlogx(counts[j]);
-      total += counts[j];
-    }
+      for (int count : counts) {
+          x -= xlogx(count);
+          total += count;
+      }
     return x + xlogx(total);
   }
 
@@ -1127,9 +1119,9 @@ public final class Utils {
     if (vector.length == 0) {
       return 0;
     }
-    for (int i = 0; i < vector.length; i++) {
-      sum += vector[i];
-    }
+      for (double aVector : vector) {
+          sum += aVector;
+      }
     return sum / (double) vector.length;
   }
 
@@ -1186,9 +1178,9 @@ public final class Utils {
   public static void normalize(double[] doubles) {
 
     double sum = 0;
-    for (int i = 0; i < doubles.length; i++) {
-      sum += doubles[i];
-    }
+      for (double aDouble : doubles) {
+          sum += aDouble;
+      }
     normalize(doubles, sum);
   }
 
@@ -1457,10 +1449,10 @@ public final class Utils {
     if (vector.length <= 1) {
       return 0;
     }
-    for (int i = 0; i < vector.length; i++) {
-      sum += vector[i];
-      sumSquared += (vector[i] * vector[i]);
-    }
+      for (double aVector : vector) {
+          sum += aVector;
+          sumSquared += (aVector * aVector);
+      }
     double result = (sumSquared - (sum * sum / (double) vector.length)) / 
       (double) (vector.length - 1);
 
@@ -1482,9 +1474,9 @@ public final class Utils {
 
     double sum = 0;
 
-    for (int i = 0; i < doubles.length; i++) {
-      sum += doubles[i];
-    }
+      for (double aDouble : doubles) {
+          sum += aDouble;
+      }
     return sum;
   }
 
@@ -1498,9 +1490,9 @@ public final class Utils {
 
     int sum = 0;
 
-    for (int i = 0; i < ints.length; i++) {
-      sum += ints[i];
-    }
+      for (int anInt : ints) {
+          sum += anInt;
+      }
     return sum;
   }
 
@@ -1717,7 +1709,7 @@ public final class Utils {
     String targetPath = (new File(absolute.getParent())).getPath() 
       + File.separator;
     String fileName = absolute.getName();
-    StringBuffer relativePath = new StringBuffer();
+    StringBuilder relativePath = new StringBuilder();
     //    relativePath.append("."+File.separator);
     //    System.err.println("User dir "+userPath);
     //    System.err.println("Target path "+targetPath);
@@ -1734,17 +1726,17 @@ public final class Utils {
       }
     } else {
       int sepCount = 0;
-      String temp = new String(userPath);
-      while (temp.indexOf(File.separator) != -1) {
+      String temp = userPath;
+      while (temp.contains(File.separator)) {
 	int ind = temp.indexOf(File.separator);
 	sepCount++;
 	temp = temp.substring(ind+1, temp.length());
       }
       
-      String targetTemp = new String(targetPath);
-      String userTemp = new String(userPath);
+      String targetTemp = targetPath;
+      String userTemp = userPath;
       int tcount = 0;
-      while (targetTemp.indexOf(File.separator) != -1) {
+      while (targetTemp.contains(File.separator)) {
 	int ind = targetTemp.indexOf(File.separator);
 	int ind2 = userTemp.indexOf(File.separator);
 	String tpart = targetTemp.substring(0,ind+1);
@@ -1764,13 +1756,13 @@ public final class Utils {
 	throw new Exception("Can't construct a path to file relative to user "
 			    +"dir.");
       }
-      if (targetTemp.indexOf(File.separator) == -1) {
+      if (!targetTemp.contains(File.separator)) {
 	targetTemp = "";
       }
       for (int i = 0; i < sepCount - tcount; i++) {
-	relativePath.append(".."+File.separator);
+	relativePath.append("..").append(File.separator);
       }
-      relativePath.append(targetTemp + fileName);
+      relativePath.append(targetTemp).append(fileName);
     }
     //    System.err.println("new path : "+relativePath.toString());
     return new File(relativePath.toString());
@@ -1824,7 +1816,7 @@ public final class Utils {
     int			i;
     String[]		lines;
 
-    result      = new Vector<String>();
+    result      = new Vector<>();
     punctuation = " .,;:!?'\"";
     lines       = s.split("\n");
 

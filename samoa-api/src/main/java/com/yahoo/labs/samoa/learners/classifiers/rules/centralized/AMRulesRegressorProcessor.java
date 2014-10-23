@@ -338,7 +338,7 @@ public class AMRulesRegressorProcessor implements Processor {
 		this.ruleNumberID=0;
 		this.defaultRule = newRule(++this.ruleNumberID);
 		
-		this.ruleSet = new LinkedList<ActiveRule>();
+		this.ruleSet = new LinkedList<>();
 	}
 
 	/* 

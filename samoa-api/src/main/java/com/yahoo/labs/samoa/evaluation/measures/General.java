@@ -150,7 +150,7 @@ public class General extends MeasureCollection{
         //TODO weight radius by number of dimensions
         double totalCompactness = 0;
         for (int c = 0; c < numFClusters; c++) {
-            ArrayList<Instance> containedPoints = new ArrayList<Instance>();
+            ArrayList<Instance> containedPoints = new ArrayList<>();
             for (int p = 0; p < numPoints; p++) {
                 //p in c
                 if(clustering.get(c).getInclusionProbability(points.get(p)) >= pointInclusionProbThreshold){

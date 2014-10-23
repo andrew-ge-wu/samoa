@@ -57,10 +57,10 @@ public class KMeans {
 	int dimensions = centers[0].getCenter().length;
 
 	ArrayList<ArrayList<Cluster>> clustering =
-		new ArrayList<ArrayList<Cluster>>();
-	for ( int i = 0; i < k; i++ ) {
-	    clustering.add( new ArrayList<Cluster>() );
-	}
+		new ArrayList<>();
+        for (Cluster center : centers) {
+            clustering.add(new ArrayList<Cluster>());
+        }
 
 	int repetitions = 100;
 	while ( repetitions-- >= 0 ) {
@@ -136,7 +136,7 @@ public class KMeans {
     }
 
     public static Clustering gaussianMeans(Clustering gtClustering, Clustering clustering) {
-        ArrayList<CFCluster> microclusters = new ArrayList<CFCluster>();
+        ArrayList<CFCluster> microclusters = new ArrayList<>();
         for (int i = 0; i < clustering.size(); i++) {
             if (clustering.get(i) instanceof CFCluster) {
                 microclusters.add((CFCluster)clustering.get(i));
@@ -184,17 +184,17 @@ public class KMeans {
 
 	// Clean up res
 	int count = 0;
-	for ( int i = 0; i < res.length; i++ ) {
-	    if ( res[i] != null )
-		++count;
-	}
+        for (CFCluster re1 : res) {
+            if (re1 != null)
+                ++count;
+        }
 
 	CFCluster[] cleaned = new CFCluster[count];
 	count = 0;
-	for ( int i = 0; i < res.length; i++ ) {
-	    if ( res[i] != null )
-		cleaned[count++] = res[i];
-	}
+        for (CFCluster re : res) {
+            if (re != null)
+                cleaned[count++] = re;
+        }
 
 	return new Clustering( cleaned );
     }

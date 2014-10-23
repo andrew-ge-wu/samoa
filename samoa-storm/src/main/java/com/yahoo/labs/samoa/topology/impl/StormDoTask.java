@@ -48,12 +48,12 @@ public class StormDoTask {
 	 */
 	public static void main(String[] args) {
 
-		 List<String> tmpArgs = new ArrayList<String>(Arrays.asList(args));
+		 List<String> tmpArgs = new ArrayList<>(Arrays.asList(args));
 		
 		boolean isLocal = isLocal(tmpArgs);
 		int numWorker = StormSamoaUtils.numWorkers(tmpArgs);
 		
-		args = tmpArgs.toArray(new String[0]);
+		args = tmpArgs.toArray(new String[tmpArgs.size()]);
 		
 		//convert the arguments into Storm topology
 		StormTopology stormTopo = StormSamoaUtils.argsToTopology(args);
@@ -82,12 +82,10 @@ public class StormDoTask {
 			try {
 				backtype.storm.StormSubmitter.submitTopology(topologyName, conf,
 						stormTopo.getStormBuilder().createTopology());
-			} catch (backtype.storm.generated.AlreadyAliveException ale) {
+			} catch (backtype.storm.generated.AlreadyAliveException | backtype.storm.generated.InvalidTopologyException ale) {
 				ale.printStackTrace();
-			} catch (backtype.storm.generated.InvalidTopologyException ite) {
-				ite.printStackTrace();
 			}
-		}
+        }
 	}
 	
 	private static boolean isLocal(List<String> tmpArgs){

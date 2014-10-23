@@ -42,7 +42,7 @@ public class ThreadsStream extends AbstractStream {
 	private int maxCounter = 1;
 	
 	public ThreadsStream(IProcessingItem sourcePi) {
-		destinations = new LinkedList<StreamDestination>();
+		destinations = new LinkedList<>();
 	}
 	
 	public void addDestination(StreamDestination destination) {

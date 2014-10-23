@@ -138,8 +138,8 @@ public class RandomRBFGeneratorEvents extends ClusteringStream {
         int currentMovementSteps;
         boolean isSplitting = false;
 
-        LinkedList<DataPoint> points = new LinkedList<DataPoint>();
-        ArrayList<SphereCluster> microClusters = new ArrayList<SphereCluster>();
+        LinkedList<DataPoint> points = new LinkedList<>();
+        ArrayList<SphereCluster> microClusters = new ArrayList<>();
         ArrayList<ArrayList<DataPoint>> microClustersPoints = new ArrayList();
         ArrayList<Integer> microClustersDecay = new ArrayList();
 
@@ -270,7 +270,7 @@ public class RandomRBFGeneratorEvents extends ClusteringStream {
                 //minMicroIndex might have been reset above
                 //create new micro cluster
                 if(minMicroIndex == -1){
-                    ArrayList<DataPoint> microPoints = new ArrayList<DataPoint>();
+                    ArrayList<DataPoint> microPoints = new ArrayList<>();
                     microPoints.add(point);
                     SphereCluster s;
                     if(alt == 0)
@@ -489,18 +489,18 @@ public class RandomRBFGeneratorEvents extends ClusteringStream {
             numGeneratedInstances = 0;
             clusterIdCounter = 0;
             mergeClusterA = mergeClusterB = null;
-            kernels = new AutoExpandVector<GeneratorCluster>();
+            kernels = new AutoExpandVector<>();
 
             initKernels();
     }
 	
     protected void generateHeader() {	// 2013/06/02: Noise label
-        ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+        ArrayList<Attribute> attributes = new ArrayList<>();
         for (int i = 0; i < this.numAttsOption.getValue(); i++) {
             attributes.add(new Attribute("att" + (i + 1)));
         }
         
-        ArrayList<String> classLabels = new ArrayList<String>();
+        ArrayList<String> classLabels = new ArrayList<>();
         for (int i = 0; i < this.numClusterOption.getValue(); i++) {
             classLabels.add("class" + (i + 1));
         }
@@ -566,8 +566,8 @@ public class RandomRBFGeneratorEvents extends ClusteringStream {
 
     public Clustering getGeneratingClusters(){
         Clustering clustering = new Clustering();
-        for (int c = 0; c < kernels.size(); c++) {
-            clustering.add(kernels.get(c).generator);
+        for (GeneratorCluster kernel : kernels) {
+            clustering.add(kernel.generator);
         }
         return clustering;
     }
@@ -576,14 +576,14 @@ public class RandomRBFGeneratorEvents extends ClusteringStream {
         Clustering clustering = new Clustering();
         int id = 0;
 
-            for (int c = 0; c < kernels.size(); c++) {
-                for (int m = 0; m < kernels.get(c).microClusters.size(); m++) {
-                    kernels.get(c).microClusters.get(m).setId(id);
-                    kernels.get(c).microClusters.get(m).setGroundTruth(kernels.get(c).generator.getId());
-                    clustering.add(kernels.get(c).microClusters.get(m));
-                    id++;
-                }
+        for (GeneratorCluster kernel : kernels) {
+            for (int m = 0; m < kernel.microClusters.size(); m++) {
+                kernel.microClusters.get(m).setId(id);
+                kernel.microClusters.get(m).setGroundTruth(kernel.generator.getId());
+                clustering.add(kernel.microClusters.get(m));
+                id++;
             }
+        }
 
         //System.out.println("numMicroKernels "+clustering.size());
         return clustering;
@@ -592,8 +592,8 @@ public class RandomRBFGeneratorEvents extends ClusteringStream {
 /**************************** EVENTS ******************************************/
     private void eventScheduler(){
 
-        for ( int i = 0; i < kernels.size(); i++ ) {
-            kernels.get(i).updateKernel();
+        for (GeneratorCluster kernel1 : kernels) {
+            kernel1.updateKernel();
         }
         
         nextEventCounter--;
@@ -601,8 +601,8 @@ public class RandomRBFGeneratorEvents extends ClusteringStream {
         //should this be randomized as well???
         if(nextEventCounter%kernelMovePointFrequency == 0){
             //move kernels
-            for ( int i = 0; i < kernels.size(); i++ ) {
-                kernels.get(i).move();
+            for (GeneratorCluster kernel : kernels) {
+                kernel.move();
                 //overlapControl();
             }
         }
@@ -868,15 +868,15 @@ public class RandomRBFGeneratorEvents extends ClusteringStream {
             incluster = false;
             if(!noiseInClusterOption.isSet() && counter > 0){
                 counter--;
-                for(int c = 0; c < kernels.size(); c++){
-                    for(int m = 0; m < kernels.get(c).microClusters.size(); m++){
+                for (GeneratorCluster kernel : kernels) {
+                    for (int m = 0; m < kernel.microClusters.size(); m++) {
                         Instance inst = new DenseInstance(1, sample);
-                        if(kernels.get(c).microClusters.get(m).getInclusionProbability(inst) > 0){
+                        if (kernel.microClusters.get(m).getInclusionProbability(inst) > 0) {
                             incluster = true;
                             break;
                         }
                     }
-                    if(incluster)
+                    if (incluster)
                         break;
                 }
             }
@@ -906,11 +906,11 @@ public class RandomRBFGeneratorEvents extends ClusteringStream {
 
     private void normalizeWeights(){
         double sumWeights = 0.0;
-        for (int i = 0; i < kernels.size(); i++) {
-            sumWeights+=kernels.get(i).generator.getWeight();
+        for (GeneratorCluster kernel1 : kernels) {
+            sumWeights += kernel1.generator.getWeight();
         }
-        for (int i = 0; i < kernels.size(); i++) {
-            kernels.get(i).generator.setWeight(kernels.get(i).generator.getWeight()/sumWeights);
+        for (GeneratorCluster kernel : kernels) {
+            kernel.generator.setWeight(kernel.generator.getWeight() / sumWeights);
         }
     }
 

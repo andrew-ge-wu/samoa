@@ -255,22 +255,22 @@ public class GreenwaldKhannaQuantileSummary extends AbstractMOAObject {
     }
 
     public static long[] computeBandBoundaries(long maxDelta) {
-        ArrayList<Long> boundaryList = new ArrayList<Long>();
-        boundaryList.add(new Long(maxDelta));
+        ArrayList<Long> boundaryList = new ArrayList<>();
+        boundaryList.add(maxDelta);
         int alpha = 1;
         while (true) {
             long boundary = (maxDelta - (2 << (alpha - 1)) - (maxDelta % (2 << (alpha - 1))));
             if (boundary >= 0) {
-                boundaryList.add(new Long(boundary + 1));
+                boundaryList.add(boundary + 1);
             } else {
                 break;
             }
             alpha++;
         }
-        boundaryList.add(new Long(0));
+        boundaryList.add((long) 0);
         long[] boundaries = new long[boundaryList.size()];
         for (int i = 0; i < boundaries.length; i++) {
-            boundaries[i] = boundaryList.get(i).longValue();
+            boundaries[i] = boundaryList.get(i);
         }
         return boundaries;
     }

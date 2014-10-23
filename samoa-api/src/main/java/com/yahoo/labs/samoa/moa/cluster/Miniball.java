@@ -62,7 +62,7 @@ public class Miniball {
 
         public PointStorage(int dimension) {
             this.dimension = dimension;
-            this.L = new ArrayList<double[]>();
+            this.L = new ArrayList<>();
         }
 
         public void add(double[] array) {

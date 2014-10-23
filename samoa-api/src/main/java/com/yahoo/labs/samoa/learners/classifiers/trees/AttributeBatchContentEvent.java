@@ -54,7 +54,7 @@ final class AttributeBatchContentEvent implements ContentEvent {
 		//attrVal = 0.0;
 		//classVal = -1;
 		//weight = 0.0;
-                contentEventList = new LinkedList<ContentEvent>();
+                contentEventList = new LinkedList<>();
 		key = "";
 		isNominal = true;
 	}
@@ -62,7 +62,7 @@ final class AttributeBatchContentEvent implements ContentEvent {
 	private AttributeBatchContentEvent(Builder builder){
 		this.learningNodeId = builder.learningNodeId;
 		this.obsIndex = builder.obsIndex;
-                this.contentEventList = new LinkedList<ContentEvent>();
+                this.contentEventList = new LinkedList<>();
                 if (builder.contentEvent != null) {
                     this.contentEventList.add(builder.contentEvent);
                 }

@@ -24,9 +24,9 @@ import com.yahoo.labs.samoa.instances.Instance;
 import com.yahoo.labs.samoa.moa.cluster.Clustering;
 import com.yahoo.labs.samoa.moa.core.AutoExpandVector;
 import com.yahoo.labs.samoa.moa.core.DataPoint;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * [CMM_GTAnalysis.java]
@@ -230,7 +230,7 @@ public class CMM_GTAnalysis{
      */
     protected class GTCluster{
     	/** points that are per definition in the cluster */
-        private ArrayList<Integer> points = new ArrayList<Integer>();
+        private ArrayList<Integer> points = new ArrayList<>();
         
         /** a new GT cluster consists of one or more "old" GT clusters. 
          * Connected/overlapping clusters cannot be merged directly because of the 
@@ -238,7 +238,7 @@ public class CMM_GTAnalysis{
          * cluster sphere can cover a lot more space then two separate smaller spheres. 
          * To keep the original coverage we need to keep the orignal clusters and merge
          * them on an abstract level. */
-        private ArrayList<Integer> clusterRepresentations = new ArrayList<Integer>();
+        private ArrayList<Integer> clusterRepresentations = new ArrayList<>();
      
         /** current work class (changes when merging) */
         private int workclass;
@@ -259,7 +259,7 @@ public class CMM_GTAnalysis{
         private double knnDevAvg = 0;
         
         /** connectivity of the cluster to all other clusters */
-        private ArrayList<Double> connections = new ArrayList<Double>();
+        private ArrayList<Double> connections = new ArrayList<>();
         
 
         private GTCluster(int workclass, int label, int gtClusteringID) {
@@ -286,9 +286,9 @@ public class CMM_GTAnalysis{
         protected double getInclusionProbability(CMMPoint point){
             double prob = Double.MIN_VALUE;
             //check all cluster representatives for coverage
-            for (int c = 0; c < clusterRepresentations.size(); c++) {
-               double tmp_prob = gtClustering.get(clusterRepresentations.get(c)).getInclusionProbability(point);
-               if(tmp_prob > prob) prob = tmp_prob;
+            for (Integer clusterRepresentation : clusterRepresentations) {
+                double tmp_prob = gtClustering.get(clusterRepresentation).getInclusionProbability(point);
+                if (tmp_prob > prob) prob = tmp_prob;
             }
             return prob;
         }
@@ -302,16 +302,16 @@ public class CMM_GTAnalysis{
             for (int p0 : points) {
                 CMMPoint cmdp = cmmpoints.get(p0);
                 if(!cmdp.isNoise()){
-                    AutoExpandVector<Double> knnDist = new AutoExpandVector<Double>();
-                    AutoExpandVector<Integer> knnPointIndex = new AutoExpandVector<Integer>();
+                    AutoExpandVector<Double> knnDist = new AutoExpandVector<>();
+                    AutoExpandVector<Integer> knnPointIndex = new AutoExpandVector<>();
                     
                     //calculate nearest neighbours 
                     getKnnInCluster(cmdp, knnNeighbourhood, points, knnDist,knnPointIndex);
 
                     //TODO: What to do if we have less then k neighbours?
                     double avgKnn = 0;
-                    for (int i = 0; i < knnDist.size(); i++) {
-                        avgKnn+= knnDist.get(i);
+                    for (Double aKnnDist : knnDist) {
+                        avgKnn += aKnnDist;
                     }
                     if(knnDist.size()!=0)
                         avgKnn/=knnDist.size();
@@ -345,8 +345,8 @@ public class CMM_GTAnalysis{
                 avgConnection = 1;
             }
             else{
-                AutoExpandVector<Double> kmax = new AutoExpandVector<Double>();
-                AutoExpandVector<Integer> kmaxIndexes = new AutoExpandVector<Integer>();
+                AutoExpandVector<Double> kmax = new AutoExpandVector<>();
+                AutoExpandVector<Integer> kmaxIndexes = new AutoExpandVector<>();
 
                 for(int p : points){
                     CMMPoint cmdp = cmmpoints.get(p);
@@ -371,8 +371,8 @@ public class CMM_GTAnalysis{
                     }
                 }
                 //connection
-                for (int k = 0; k < kmax.size(); k++) {
-                    avgConnection+= kmax.get(k);
+                for (Double aKmax : kmax) {
+                    avgConnection += aKmax;
                 }
                 avgConnection/=kmax.size();
             }
@@ -410,22 +410,20 @@ public class CMM_GTAnalysis{
 
                 //update mapTrueLabelToWorkLabel
                 mapTrueLabelToWorkLabel.put(gtcMerge.label, workclass);
-                Iterator iterator = mapTrueLabelToWorkLabel.keySet().iterator();
-                while (iterator.hasNext()) {
-                    Integer key = (Integer)iterator.next();
+                for (Integer key : mapTrueLabelToWorkLabel.keySet()) {
                     //update pointer of already merged cluster
                     int value = mapTrueLabelToWorkLabel.get(key);
-                    if(value == mergeID)
+                    if (value == mergeID)
                         mapTrueLabelToWorkLabel.put(key, workclass);
-                    if(value > mergeID)
-                        mapTrueLabelToWorkLabel.put(key, value-1);
+                    if (value > mergeID)
+                        mapTrueLabelToWorkLabel.put(key, value - 1);
                 }
 
                 //merge points from B into A
                 points.addAll(gtcMerge.points);
                 clusterRepresentations.addAll(gtcMerge.clusterRepresentations);
                 if(mergedWorkLabels==null){
-                    mergedWorkLabels = new ArrayList<Integer>();
+                    mergedWorkLabels = new ArrayList<>();
                 }
                 mergedWorkLabels.add(gtcMerge.orgWorkClass);
                 if(gtcMerge.mergedWorkLabels!=null)
@@ -480,10 +478,10 @@ public class CMM_GTAnalysis{
         numGTClusters = gtClustering.size();
 
         //init mappings between work and true labels
-        mapTrueLabelToWorkLabel = new HashMap<Integer, Integer>();
+        mapTrueLabelToWorkLabel = new HashMap<>();
         
         //set up base of new clustering
-        gt0Clusters = new ArrayList<GTCluster>();
+        gt0Clusters = new ArrayList<>();
         int numWorkClasses = 0;
         //create label to worklabel mapping as real labels can be just a set of unordered integers
         for (int i = 0; i < numGTClusters; i++) {
@@ -505,7 +503,7 @@ public class CMM_GTAnalysis{
         }
 
         //create cmd point wrapper instances
-        cmmpoints = new ArrayList<CMMPoint>();
+        cmmpoints = new ArrayList<>();
         for (int p = 0; p < points.size(); p++) {
             CMMPoint cmdp = new CMMPoint(points.get(p), p);
             cmmpoints.add(cmdp);
@@ -513,7 +511,7 @@ public class CMM_GTAnalysis{
 
 
         //split points up into their GTClusters and Noise (according to class labels)
-        noise = new ArrayList<Integer>();
+        noise = new ArrayList<>();
         for (int p = 0; p < numPoints; p++) {
             if(cmmpoints.get(p).isNoise()){
                 noise.add(p);
@@ -548,16 +546,16 @@ public class CMM_GTAnalysis{
      */
     //TODO: Cache the connection value for a point to the different clusters???
     protected double getConnectionValue(CMMPoint cmmp, int clusterID){
-        AutoExpandVector<Double> knnDist = new AutoExpandVector<Double>();
-        AutoExpandVector<Integer> knnPointIndex = new AutoExpandVector<Integer>();
+        AutoExpandVector<Double> knnDist = new AutoExpandVector<>();
+        AutoExpandVector<Integer> knnPointIndex = new AutoExpandVector<>();
         
         //calculate the knn distance of the point to the cluster
         getKnnInCluster(cmmp, knnNeighbourhood, gt0Clusters.get(clusterID).points, knnDist, knnPointIndex);
 
         //TODO: What to do if we have less then k neighbors?
         double avgDist = 0;
-        for (int i = 0; i < knnDist.size(); i++) {
-            avgDist+= knnDist.get(i);
+        for (Double aKnnDist : knnDist) {
+            avgDist += aKnnDist;
         }
         //what to do if we only have a single point???
         if(knnDist.size()!=0)
@@ -603,20 +601,20 @@ public class CMM_GTAnalysis{
                                  AutoExpandVector<Integer> knnPointIndex) {
 
         //iterate over every point in the choosen cluster, cal distance and insert into list
-        for (int p1 = 0; p1 < pointIDs.size(); p1++) {
-            int pid = pointIDs.get(p1);
-            if(cmmp.pID == pid) continue;
-            double dist = distance(cmmp,cmmpoints.get(pid));
-            if(knnDist.size() < k || dist < knnDist.get(knnDist.size()-1)){
+        for (Integer pointID : pointIDs) {
+            int pid = pointID;
+            if (cmmp.pID == pid) continue;
+            double dist = distance(cmmp, cmmpoints.get(pid));
+            if (knnDist.size() < k || dist < knnDist.get(knnDist.size() - 1)) {
                 int index = 0;
-                while(index < knnDist.size() && dist > knnDist.get(index)) {
+                while (index < knnDist.size() && dist > knnDist.get(index)) {
                     index++;
                 }
                 knnDist.add(index, dist);
-                knnPointIndex.add(index,pid);
-                if(knnDist.size() > k){
-                    knnDist.remove(knnDist.size()-1);
-                    knnPointIndex.remove(knnPointIndex.size()-1);
+                knnPointIndex.add(index, pid);
+                if (knnDist.size() > k) {
+                    knnDist.remove(knnDist.size() - 1);
+                    knnPointIndex.remove(knnPointIndex.size() - 1);
                 }
             }
         }
@@ -654,10 +652,10 @@ public class CMM_GTAnalysis{
         while(changedConnection){
             if(debug){
                 System.out.println("Cluster Connection");
-                for (int c = 0; c < gt0Clusters.size(); c++) {
-                    System.out.print("C"+gt0Clusters.get(c).label+" --> ");
-                    for (int c1 = 0; c1 < gt0Clusters.get(c).connections.size(); c1++) {
-                        System.out.print(" C"+gt0Clusters.get(c1).label+": "+gt0Clusters.get(c).connections.get(c1));
+                for (GTCluster gt0Cluster : gt0Clusters) {
+                    System.out.print("C" + gt0Cluster.label + " --> ");
+                    for (int c1 = 0; c1 < gt0Cluster.connections.size(); c1++) {
+                        System.out.print(" C" + gt0Clusters.get(c1).label + ": " + gt0Cluster.connections.get(c1));
                     }
                     System.out.println("");
                 }

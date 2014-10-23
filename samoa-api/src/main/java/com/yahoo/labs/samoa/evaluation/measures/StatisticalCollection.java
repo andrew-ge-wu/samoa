@@ -129,7 +129,7 @@ public class StatisticalCollection extends MeasureCollection{
         double[] maxWithinClusters = new double[numClusters];
         ArrayList<Integer>[] pointsInClusters = new ArrayList[numClusters];
         for (int c = 0; c < numClusters; c++) {
-            pointsInClusters[c] = new ArrayList<Integer>();
+            pointsInClusters[c] = new ArrayList<>();
             minWithinClusters[c] = Double.MAX_VALUE;
             maxWithinClusters[c] = Double.MIN_VALUE;
         }

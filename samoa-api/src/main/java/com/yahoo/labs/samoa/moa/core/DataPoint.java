@@ -21,20 +21,19 @@ package com.yahoo.labs.samoa.moa.core;
  * #L%
  */
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.TreeSet;
-
 import com.yahoo.labs.samoa.instances.Attribute;
 import com.yahoo.labs.samoa.instances.DenseInstance;
 import com.yahoo.labs.samoa.instances.Instance;
+
+import java.util.HashMap;
+import java.util.TreeSet;
 
 public class DataPoint extends DenseInstance{
     
 	private static final long serialVersionUID = 1L;
 	
 	protected int timestamp;
-    private HashMap<String, String> measure_values;
+    private final HashMap<String, String> measure_values;
     
     protected int noiseLabel;
 
@@ -42,7 +41,7 @@ public class DataPoint extends DenseInstance{
         super(nextInstance);
         this.setDataset(nextInstance.dataset());
         this.timestamp = timestamp;
-        measure_values = new HashMap<String, String>();
+        measure_values = new HashMap<>();
         
         Attribute classLabel = dataset().classAttribute();
         noiseLabel = classLabel.indexOfValue("noise");		// -1 returned if there is no noise
@@ -78,19 +77,19 @@ public class DataPoint extends DenseInstance{
     }
     
     public String getInfo(int x_dim, int y_dim) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("<html><table>");
-        sb.append("<tr><td>Point</td><td>"+timestamp+"</td></tr>");
+        sb.append("<tr><td>Point</td><td>").append(timestamp).append("</td></tr>");
         for (int i = 0; i < numAttributes() - 1; i++) { //m_AttValues.length
             String label = "Dim "+i;
             if(i == x_dim)
                  label = "<b>X</b>";
             if(i == y_dim)
                  label = "<b>Y</b>";
-            sb.append("<tr><td>"+label+"</td><td>"+value(i)+"</td></tr>");
+            sb.append("<tr><td>").append(label).append("</td><td>").append(value(i)).append("</td></tr>");
         }
-        sb.append("<tr><td>Decay</td><td>"+weight()+"</td></tr>");
-        sb.append("<tr><td>True cluster</td><td>"+classValue()+"</td></tr>");
+        sb.append("<tr><td>Decay</td><td>").append(weight()).append("</td></tr>");
+        sb.append("<tr><td>True cluster</td><td>").append(classValue()).append("</td></tr>");
         sb.append("</table>");
         sb.append("<br>");
         sb.append("<b>Evaluation</b><br>");
@@ -98,14 +97,12 @@ public class DataPoint extends DenseInstance{
 
         TreeSet<String> sortedset;
         synchronized(measure_values){
-            sortedset = new TreeSet<String>(measure_values.keySet());
+            sortedset = new TreeSet<>(measure_values.keySet());
         }
 
-        Iterator miterator = sortedset.iterator();
-         while(miterator.hasNext()) {
-             String key = (String)miterator.next();
-             sb.append("<tr><td>"+key+"</td><td>"+measure_values.get(key)+"</td></tr>");
-         }
+        for (String key : sortedset) {
+            sb.append("<tr><td>").append(key).append("</td><td>").append(measure_values.get(key)).append("</td></tr>");
+        }
 
         sb.append("</table></html>");
         return sb.toString();

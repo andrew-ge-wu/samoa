@@ -36,6 +36,8 @@ import com.yahoo.labs.samoa.instances.Instance;
 import com.yahoo.labs.samoa.moa.classifiers.core.driftdetection.ChangeDetector;
 import static com.yahoo.labs.samoa.moa.core.Utils.maxIndex;
 import com.yahoo.labs.samoa.topology.Stream;
+
+import java.util.Arrays;
 //import weka.core.Instance;
 
 /**
@@ -172,7 +174,7 @@ final public class LocalLearnerProcessor implements Processor {
 			outContentEvent.setEvaluationIndex(inEvent.getEvaluationIndex());
 			logger.trace(inEvent.getInstanceIndex() + " " // +
 															// inEvent.getClassId()
-					+ " " + modelId + " " + dist);
+					+ " " + modelId + " " + Arrays.toString(dist));
 			outputStream.put(outContentEvent);
 			
 			//if (++test % 10000 == 0) {

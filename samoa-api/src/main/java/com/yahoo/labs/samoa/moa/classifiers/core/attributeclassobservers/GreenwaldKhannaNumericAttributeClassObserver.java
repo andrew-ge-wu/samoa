@@ -45,7 +45,7 @@ public class GreenwaldKhannaNumericAttributeClassObserver extends AbstractOption
 
     private static final long serialVersionUID = 1L;
 
-    protected AutoExpandVector<GreenwaldKhannaQuantileSummary> attValDistPerClass = new AutoExpandVector<GreenwaldKhannaQuantileSummary>();
+    protected AutoExpandVector<GreenwaldKhannaQuantileSummary> attValDistPerClass = new AutoExpandVector<>();
 
     public IntOption numTuplesOption = new IntOption("numTuples", 'n',
         "The number of tuples.", 10, 1, Integer.MAX_VALUE);

@@ -173,7 +173,7 @@ public class OptionsHandler extends JavaCLIParser {
                     }
                 }
                 if (this.classOptionNamesToPreparedObjects == null) {
-                    this.classOptionNamesToPreparedObjects = new HashMap<String, Object>();
+                    this.classOptionNamesToPreparedObjects = new HashMap<>();
                 }
                 this.classOptionNamesToPreparedObjects.put(option.getName(),
                         optionObj);

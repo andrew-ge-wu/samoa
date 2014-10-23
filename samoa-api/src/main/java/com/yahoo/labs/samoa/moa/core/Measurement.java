@@ -74,7 +74,7 @@ public class Measurement extends AbstractMOAObject {
     }
 
     public static Measurement[] averageMeasurements(Measurement[][] toAverage) {
-        List<String> measurementNames = new ArrayList<String>();
+        List<String> measurementNames = new ArrayList<>();
         for (Measurement[] measurements : toAverage) {
             for (Measurement measurement : measurements) {
                 if (measurementNames.indexOf(measurement.getName()) < 0) {
@@ -91,7 +91,7 @@ public class Measurement extends AbstractMOAObject {
                 estimators[measurementNames.indexOf(measurement.getName())].addObservation(measurement.getValue(), 1.0);
             }
         }
-        List<Measurement> averagedMeasurements = new ArrayList<Measurement>();
+        List<Measurement> averagedMeasurements = new ArrayList<>();
         for (int i = 0; i < measurementNames.size(); i++) {
             String mName = measurementNames.get(i);
             GaussianEstimator mEstimator = estimators[i];

@@ -52,7 +52,7 @@ public abstract class MeasureCollection extends AbstractMOAObject{
      public MeasureCollection() {
         names = getNames();
         numMeasures = names.length;
-        map = new HashMap<String, Integer>(numMeasures);        
+        map = new HashMap<>(numMeasures);
         for (int i = 0; i < names.length; i++) {
              map.put(names[i],i);
         }
@@ -64,11 +64,11 @@ public abstract class MeasureCollection extends AbstractMOAObject{
         corrupted = new boolean[numMeasures];
         enabled = getDefaultEnabled();
         time = 0;
-        events = new ArrayList<String>();
+        events = new ArrayList<>();
 
         for (int i = 0; i < numMeasures; i++) {
-                values[i] = new ArrayList<Double>();
-                sortedValues[i] = new ArrayList<Double>();
+                values[i] = new ArrayList<>();
+                sortedValues[i] = new ArrayList<>();
                 maxValue[i] = Double.MIN_VALUE;
                 minValue[i] = Double.MAX_VALUE;
                 corrupted[i] = false;

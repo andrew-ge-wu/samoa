@@ -53,24 +53,22 @@ public class SDRSplitCriterionAMRules extends SDRSplitCriterion implements Split
 	public double getMeritOfSplit(double[] preSplitDist, double[][] postSplitDists) {
 		double SDR=0.0;
 		double N = preSplitDist[0];
-		int count = 0; 
+		int count = 0;
 
-		for(int i = 0; i < postSplitDists.length; i++)
-		{
-			double Ni = postSplitDists[i][0];
-			if(Ni >=0.05*preSplitDist[0]){
-				count = count +1;
-			}
-		}
+        for (double[] postSplitDist1 : postSplitDists) {
+            double Ni = postSplitDist1[0];
+            if (Ni >= 0.05 * preSplitDist[0]) {
+                count = count + 1;
+            }
+        }
 		if(count == postSplitDists.length){
 			SDR = computeSD(preSplitDist);
 
-			for(int i = 0; i < postSplitDists.length; i++)
-			{
-				double Ni = postSplitDists[i][0];
-				SDR -= (Ni/N)*computeSD(postSplitDists[i]);
+            for (double[] postSplitDist : postSplitDists) {
+                double Ni = postSplitDist[0];
+                SDR -= (Ni / N) * computeSD(postSplitDist);
 
-			}
+            }
 		}
 		return SDR;
 	}
@@ -86,11 +84,10 @@ public class SDRSplitCriterionAMRules extends SDRSplitCriterion implements Split
 		double[] SDR = new double[postSplitDists.length];
 		double N = 0;
 
-		for(int i = 0; i < postSplitDists.length; i++)
-		{
-			double Ni = postSplitDists[i][0];
-			N += Ni;
-		}
+        for (double[] postSplitDist : postSplitDists) {
+            double Ni = postSplitDist[0];
+            N += Ni;
+        }
 		for(int i = 0; i < postSplitDists.length; i++)
 		{
 			double Ni = postSplitDists[i][0];

@@ -47,11 +47,11 @@ public class LocalStormDoTask {
      */
     public static void main(String[] args) {
 
-        List<String> tmpArgs = new ArrayList<String>(Arrays.asList(args));
+        List<String> tmpArgs = new ArrayList<>(Arrays.asList(args));
 
         int numWorker = StormSamoaUtils.numWorkers(tmpArgs);
 
-        args = tmpArgs.toArray(new String[0]);
+        args = tmpArgs.toArray(new String[tmpArgs.size()]);
 
         //convert the arguments into Storm topology
         StormTopology stormTopo = StormSamoaUtils.argsToTopology(args);

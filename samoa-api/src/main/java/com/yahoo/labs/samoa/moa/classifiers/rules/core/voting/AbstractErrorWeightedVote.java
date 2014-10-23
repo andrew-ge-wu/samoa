@@ -44,26 +44,25 @@ public abstract class AbstractErrorWeightedVote extends AbstractMOAObject implem
 
 	public AbstractErrorWeightedVote() {
 		super();
-		votes = new ArrayList<double[]>();
-		errors = new ArrayList<Double>();
+		votes = new ArrayList<>();
+		errors = new ArrayList<>();
 	}
 	
 	public AbstractErrorWeightedVote(AbstractErrorWeightedVote aewv) {
 		super();
-		votes = new ArrayList<double[]>();
+		votes = new ArrayList<>();
 		for (double[] vote:aewv.votes) {
 			double[] v = new double[vote.length];
-			for (int i=0; i<vote.length; i++) v[i] = vote[i];
+            System.arraycopy(vote, 0, v, 0, vote.length);
 			votes.add(v);
 		}
-		errors = new ArrayList<Double>();
+		errors = new ArrayList<>();
 		for (Double db:aewv.errors) {
-			errors.add(db.doubleValue());
+			errors.add(db);
 		}
 		if (aewv.weights != null) {
 			weights = new double[aewv.weights.length];
-			for (int i = 0; i<aewv.weights.length; i++) 
-				weights[i] = aewv.weights[i];
+            System.arraycopy(aewv.weights, 0, weights, 0, aewv.weights.length);
 		}
 	}
 

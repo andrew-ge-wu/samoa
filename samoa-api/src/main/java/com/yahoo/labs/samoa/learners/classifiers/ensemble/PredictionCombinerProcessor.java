@@ -145,8 +145,8 @@ public class PredictionCombinerProcessor implements Processor {
 
     protected void addStatisticsforInstanceReceived(int instanceIndex, int classifierIndex, double[] prediction, int add) {
         if (this.mapCountsforInstanceReceived == null) {
-            this.mapCountsforInstanceReceived = new HashMap<Integer, Integer>();
-            this.mapVotesforInstanceReceived = new HashMap<Integer, DoubleVector>();
+            this.mapCountsforInstanceReceived = new HashMap<>();
+            this.mapVotesforInstanceReceived = new HashMap<>();
         }
         DoubleVector vote = new DoubleVector(prediction);
         if (vote.sumOfValues() > 0.0) {

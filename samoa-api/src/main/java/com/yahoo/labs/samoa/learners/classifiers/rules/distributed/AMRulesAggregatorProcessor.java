@@ -149,35 +149,34 @@ public class AMRulesAggregatorProcessor implements Processor {
 		boolean continueTraining = instanceEvent.isTraining();
 		
 		ErrorWeightedVote errorWeightedVote = newErrorWeightedVote();
-		Iterator<PassiveRule> ruleIterator= this.ruleSet.iterator();
-		while (ruleIterator.hasNext()) { 
-			if (!continuePrediction && !continueTraining)
-				break;
-			
-			PassiveRule rule = ruleIterator.next();
-			
-			if (rule.isCovering(instance) == true){
-				predictionCovered = true;
+        for (PassiveRule aRuleSet : this.ruleSet) {
+            if (!continuePrediction && !continueTraining)
+                break;
 
-				if (continuePrediction) {
-					double [] vote=rule.getPrediction(instance);
-					double error= rule.getCurrentError();
-					errorWeightedVote.addVote(vote,error);
-					if (!this.unorderedRules) continuePrediction = false;
-				}
-				
-				if (continueTraining) {
-					if (!isAnomaly(instance, rule)) {
-						trainingCovered = true;
-						rule.updateStatistics(instance);
-						// Send instance to statistics PIs
-						sendInstanceToRule(instance, rule.getRuleNumberID());
-						
-						if (!this.unorderedRules) continueTraining = false;
-					}
-				}
-			}
-		}
+            PassiveRule rule = aRuleSet;
+
+            if (rule.isCovering(instance) == true) {
+                predictionCovered = true;
+
+                if (continuePrediction) {
+                    double[] vote = rule.getPrediction(instance);
+                    double error = rule.getCurrentError();
+                    errorWeightedVote.addVote(vote, error);
+                    if (!this.unorderedRules) continuePrediction = false;
+                }
+
+                if (continueTraining) {
+                    if (!isAnomaly(instance, rule)) {
+                        trainingCovered = true;
+                        rule.updateStatistics(instance);
+                        // Send instance to statistics PIs
+                        sendInstanceToRule(instance, rule.getRuleNumberID());
+
+                        if (!this.unorderedRules) continueTraining = false;
+                    }
+                }
+            }
+        }
 		
 		if (predictionCovered) {
 			// Combined prediction
@@ -329,7 +328,7 @@ public class AMRulesAggregatorProcessor implements Processor {
 		this.ruleNumberID=0;
 		this.defaultRule = newRule(++this.ruleNumberID);
 		
-		this.ruleSet = new LinkedList<PassiveRule>();
+		this.ruleSet = new LinkedList<>();
 	}
 
 	/* 

@@ -61,7 +61,7 @@ public class RuleActiveRegressionNode extends RuleRegressionNode implements Rule
 	
 	protected AttributeSplitSuggestion bestSuggestion = null;
 	
-	protected AutoExpandVector<AttributeClassObserver> attributeObservers = new AutoExpandVector<AttributeClassObserver>();
+	protected AutoExpandVector<AttributeClassObserver> attributeObservers = new AutoExpandVector<>();
 	private FIMTDDNumericAttributeClassLimitObserver numericObserver;
 	
 	/*
@@ -297,7 +297,7 @@ public class RuleActiveRegressionNode extends RuleRegressionNode implements Rule
 	
 	public AttributeSplitSuggestion[] getBestSplitSuggestions(SplitCriterion criterion) {
 
-		List<AttributeSplitSuggestion> bestSuggestions = new LinkedList<AttributeSplitSuggestion>();
+		List<AttributeSplitSuggestion> bestSuggestions = new LinkedList<>();
 
 		// Set the nodeStatistics up as the preSplitDistribution, rather than the observedClassDistribution
 		double[] nodeSplitDist = this.nodeStatistics.getArrayCopy();

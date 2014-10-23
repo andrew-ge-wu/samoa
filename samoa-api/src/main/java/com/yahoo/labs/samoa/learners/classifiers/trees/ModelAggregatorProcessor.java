@@ -173,7 +173,7 @@ final class ModelAggregatorProcessor implements Processor {
                         this.foundNodeSet = null;
 		} else if(event instanceof LocalResultContentEvent){
 			LocalResultContentEvent lrce = (LocalResultContentEvent) event;
-			Long lrceSplitId = Long.valueOf(lrce.getSplitId());
+			Long lrceSplitId = lrce.getSplitId();
 			SplittingNodeInfo splittingNodeInfo = splittingNodes.get(lrceSplitId);
 			
 			if (splittingNodeInfo != null) { // if null, that means
@@ -208,8 +208,8 @@ final class ModelAggregatorProcessor implements Processor {
 		this.decisionNodeCount = 0; 
 		this.growthAllowed = true;
 		
-		this.splittingNodes = new ConcurrentHashMap<Long, SplittingNodeInfo>();
-		this.timedOutSplittingNodes = new LinkedBlockingQueue<Long>();
+		this.splittingNodes = new ConcurrentHashMap<>();
+		this.timedOutSplittingNodes = new LinkedBlockingQueue<>();
 		this.splitId = 0;
 		
 		//Executor for scheduling time-out threads
@@ -230,14 +230,8 @@ final class ModelAggregatorProcessor implements Processor {
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		
-		sb.append("ActiveLeafNodeCount: " + activeLeafNodeCount);
-		sb.append("InactiveLeafNodeCount: " + inactiveLeafNodeCount);
-		sb.append("DecisionNodeCount: " + decisionNodeCount);
-		sb.append("Growth allowed: " + growthAllowed);
-		return sb.toString();
+
+        return super.toString() + "ActiveLeafNodeCount: " + activeLeafNodeCount + "InactiveLeafNodeCount: " + inactiveLeafNodeCount + "DecisionNodeCount: " + decisionNodeCount + "Growth allowed: " + growthAllowed;
 	}
 	
 	void setResultStream(Stream resultStream){
@@ -282,7 +276,7 @@ final class ModelAggregatorProcessor implements Processor {
 		return rce;
 	}
 			
-        private List<InstancesContentEvent> contentEventList = new LinkedList<InstancesContentEvent>();
+        private List<InstancesContentEvent> contentEventList = new LinkedList<>();
 
         
 	/**
@@ -465,7 +459,7 @@ final class ModelAggregatorProcessor implements Processor {
 			}*/
 			}
                 if (this.foundNodeSet == null){
-                    this.foundNodeSet = new HashSet<FoundNode>();
+                    this.foundNodeSet = new HashSet<>();
 		}
                 this.foundNodeSet.add(foundNode);
 	}
@@ -487,7 +481,7 @@ final class ModelAggregatorProcessor implements Processor {
 		//Keep track of the splitting node information, so that we can continue the split
 		//once we receive all local statistic calculation from Local Statistic PI
 		//this.splittingNodes.put(Long.valueOf(this.splitId), new SplittingNodeInfo(activeLearningNode, foundNode, null)); 
-		this.splittingNodes.put(Long.valueOf(this.splitId), new SplittingNodeInfo(activeLearningNode, foundNode, timeOutHandler));
+		this.splittingNodes.put(this.splitId, new SplittingNodeInfo(activeLearningNode, foundNode, timeOutHandler));
 		
 		//Inform Local Statistic PI to perform local statistic calculation
 		activeLearningNode.requestDistributedSuggestions(this.splitId, this);

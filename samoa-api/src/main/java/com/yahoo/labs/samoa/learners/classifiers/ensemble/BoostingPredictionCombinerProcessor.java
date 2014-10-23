@@ -115,7 +115,7 @@ public class BoostingPredictionCombinerProcessor extends PredictionCombinerProce
 
     private void addPredictions(int instanceIndex, ResultContentEvent inEvent, double[] prediction) {
         if (this.mapPredictions == null) {
-            this.mapPredictions = new HashMap<Integer, DoubleVector>();
+            this.mapPredictions = new HashMap<>();
         }
         DoubleVector predictions = this.mapPredictions.get(instanceIndex);
         if (predictions == null){

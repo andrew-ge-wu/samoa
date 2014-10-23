@@ -122,7 +122,7 @@ public class HDFSFileStreamSourceTest {
 		
 		// assertions
 		assertEquals("Size of filePaths is not correct.", NUM_FILES_IN_DIR,streamSource.getFilePathListSize(),0);
-		Set<String> filenames = new HashSet<String>();
+		Set<String> filenames = new HashSet<>();
 		for (int i=1; i<=NUM_FILES_IN_DIR; i++) {
 			String targetFn = BASE_DIR+"/"+Integer.toString(i)+".txt";
 			filenames.add(targetFn);
@@ -144,7 +144,7 @@ public class HDFSFileStreamSourceTest {
 		
 		// assertions
 		assertEquals("Size of filePaths is not correct.", NUM_FILES_IN_DIR,streamSource.getFilePathListSize(),0);
-		Set<String> filenames = new HashSet<String>();
+		Set<String> filenames = new HashSet<>();
 		for (int i=1; i<=NUM_FILES_IN_DIR; i++) {
 			String targetFn = BASE_DIR+"/"+Integer.toString(i);
 			filenames.add(targetFn);
@@ -168,7 +168,7 @@ public class HDFSFileStreamSourceTest {
 		streamSource.init(config, BASE_DIR, "txt");
 				
 		// call getNextInputStream & assertions
-		Set<String> contents = new HashSet<String>();
+		Set<String> contents = new HashSet<>();
 		for (int i=1; i<=NUM_FILES_IN_DIR; i++) {
 			contents.add(Integer.toString(i));
 		}

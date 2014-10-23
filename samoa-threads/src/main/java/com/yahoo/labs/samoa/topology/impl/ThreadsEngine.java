@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ThreadsEngine {
 	
-	private static final List<ExecutorService> threadPool = new ArrayList<ExecutorService>();
+	private static final List<ExecutorService> threadPool = new ArrayList<>();
 	
 	/*
 	 * Create and manage threads

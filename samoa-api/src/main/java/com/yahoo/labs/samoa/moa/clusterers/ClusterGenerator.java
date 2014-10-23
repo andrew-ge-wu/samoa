@@ -21,16 +21,17 @@ package com.yahoo.labs.samoa.moa.clusterers;
  * #L%
  */
 
+import com.github.javacliparser.FloatOption;
+import com.github.javacliparser.IntOption;
+import com.yahoo.labs.samoa.instances.Instance;
+import com.yahoo.labs.samoa.moa.cluster.Clustering;
+import com.yahoo.labs.samoa.moa.cluster.SphereCluster;
+import com.yahoo.labs.samoa.moa.core.DataPoint;
+import com.yahoo.labs.samoa.moa.core.Measurement;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-import com.github.javacliparser.FloatOption;
-import com.github.javacliparser.IntOption;
-import com.yahoo.labs.samoa.moa.cluster.Clustering;
-import com.yahoo.labs.samoa.moa.cluster.SphereCluster;
-import com.yahoo.labs.samoa.moa.core.Measurement;
-import com.yahoo.labs.samoa.moa.core.DataPoint;
-import com.yahoo.labs.samoa.instances.Instance;
 
 public class ClusterGenerator extends AbstractClusterer{
 
@@ -66,7 +67,7 @@ public class ClusterGenerator extends AbstractClusterer{
 
     @Override
     public void resetLearningImpl() {
-        points = new ArrayList<DataPoint>();
+        points = new ArrayList<>();
         instanceCounter = 0;
         windowCounter = 0;
         random = new Random(227);

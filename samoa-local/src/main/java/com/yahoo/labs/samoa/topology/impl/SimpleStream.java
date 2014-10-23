@@ -46,7 +46,7 @@ class SimpleStream extends AbstractStream {
 
     SimpleStream(IProcessingItem sourcePi) {
     	super(sourcePi);
-    	this.destinations = new LinkedList<StreamDestination>();
+    	this.destinations = new LinkedList<>();
     	this.eventCounter = 0;
     	this.maxCounter = 1;
     }

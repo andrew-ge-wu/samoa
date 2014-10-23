@@ -79,7 +79,7 @@ final public class InstancesContentEvent implements ContentEvent {
             this.isTesting = event.isTesting();
         }
 
-        protected List<Instance> instanceList = new LinkedList<Instance>();
+        protected List<Instance> instanceList = new LinkedList<>();
         
         public void add(Instance instance){
             instanceList.add(new SerializableInstance(instance));

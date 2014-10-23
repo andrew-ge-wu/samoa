@@ -48,13 +48,13 @@ public class LocalFileStreamSource implements FileStreamSource {
 	}
 	
 	public void init(String path, String ext) {
-		this.filePaths = new ArrayList<String>();
+		this.filePaths = new ArrayList<>();
 		File fileAtPath = new File(path);
 		if (fileAtPath.isDirectory()) {
 			File[] filesInDir = fileAtPath.listFiles(new FileExtensionFilter(ext));
-			for (int i=0; i<filesInDir.length; i++) {
-				filePaths.add(filesInDir[i].getAbsolutePath());
-			}
+            for (File aFilesInDir : filesInDir) {
+                filePaths.add(aFilesInDir.getAbsolutePath());
+            }
 		}
 		else {
 			this.filePaths.add(path);

@@ -45,7 +45,7 @@ public class PassiveRule extends LearningRule {
 	 * Constructor to turn an ActiveRule into a PassiveRule
 	 */
 	public PassiveRule(ActiveRule rule) {
-		this.nodeList = new LinkedList<RuleSplitNode>();
+		this.nodeList = new LinkedList<>();
 		for (RuleSplitNode node:rule.nodeList) {
 			this.nodeList.add(node.getACopy());
 		}

@@ -74,7 +74,7 @@ public class WithKmeans extends AbstractClusterer {
 		this.kernels = new ClustreamKernel[maxNumKernelsOption.getValue()];
 		this.timeWindow = timeWindowOption.getValue();
 		this.initialized = false;
-		this.buffer = new LinkedList<ClustreamKernel>();
+		this.buffer = new LinkedList<>();
 		this.bufferSize = maxNumKernelsOption.getValue();
 		t = kernelRadiFactorOption.getValue();
 		m = maxNumKernelsOption.getValue();
@@ -104,14 +104,14 @@ public class WithKmeans extends AbstractClusterer {
 		// 1. Determine closest kernel
 		ClustreamKernel closestKernel = null;
 		double minDistance = Double.MAX_VALUE;
-		for ( int i = 0; i < kernels.length; i++ ) {
-			//System.out.println(i+" "+kernels[i].getWeight()+" "+kernels[i].getDeviation());
-			double distance = distance(instance.toDoubleArray(), kernels[i].getCenter());
-			if (distance < minDistance) {
-				closestKernel = kernels[i];
-				minDistance = distance;
-			}
-		}
+        for (ClustreamKernel kernel1 : kernels) {
+            //System.out.println(i+" "+kernels[i].getWeight()+" "+kernels[i].getDeviation());
+            double distance = distance(instance.toDoubleArray(), kernel1.getCenter());
+            if (distance < minDistance) {
+                closestKernel = kernel1;
+                minDistance = distance;
+            }
+        }
 
 		// 2. Check whether instance fits into closestKernel
 		double radius = 0.0;
@@ -120,14 +120,14 @@ public class WithKmeans extends AbstractClusterer {
 			// next closest cluster
 			radius = Double.MAX_VALUE;
 			double[] center = closestKernel.getCenter();
-			for ( int i = 0; i < kernels.length; i++ ) {
-				if ( kernels[i] == closestKernel ) {
-					continue;
-				}
+            for (ClustreamKernel kernel : kernels) {
+                if (kernel == closestKernel) {
+                    continue;
+                }
 
-				double distance = distance(kernels[i].getCenter(), center );
-				radius = Math.min( distance, radius );
-			}
+                double distance = distance(kernel.getCenter(), center);
+                radius = Math.min(distance, radius);
+            }
 		} else {
 			radius = closestKernel.getRadius();
 		}
@@ -224,7 +224,7 @@ public class WithKmeans extends AbstractClusterer {
 	 */
 	public static Clustering kMeans_gta(int k, Clustering clustering, Clustering gtClustering) {
 		
-		ArrayList<CFCluster> microclusters = new ArrayList<CFCluster>();
+		ArrayList<CFCluster> microclusters = new ArrayList<>();
         for (int i = 0; i < clustering.size(); i++) {
             if (clustering.get(i) instanceof CFCluster) {
                 microclusters.add((CFCluster)clustering.get(i));
@@ -262,7 +262,7 @@ public class WithKmeans extends AbstractClusterer {
 	 */
 	public static Clustering kMeans_rand(int k, Clustering clustering) {
 		
-		ArrayList<CFCluster> microclusters = new ArrayList<CFCluster>();
+		ArrayList<CFCluster> microclusters = new ArrayList<>();
         for (int i = 0; i < clustering.size(); i++) {
             if (clustering.get(i) instanceof CFCluster) {
                 microclusters.add((CFCluster)clustering.get(i));
@@ -300,7 +300,7 @@ public class WithKmeans extends AbstractClusterer {
 
 		int dimensions = centers[0].getCenter().length;
 
-		ArrayList<ArrayList<Cluster>> clustering = new ArrayList<ArrayList<Cluster>>();
+		ArrayList<ArrayList<Cluster>> clustering = new ArrayList<>();
 		for (int i = 0; i < k; i++) {
 			clustering.add(new ArrayList<Cluster>());
 		}
@@ -381,17 +381,17 @@ public class WithKmeans extends AbstractClusterer {
 
 		// Clean up
 		int count = 0;
-		for (int i = 0; i < converted.length; i++) {
-		    if (converted[i] != null)
-			count++;
-		}
+        for (CFCluster aConverted1 : converted) {
+            if (aConverted1 != null)
+                count++;
+        }
 
 		CFCluster[] cleaned = new CFCluster[count];
 		count = 0;
-		for (int i = 0; i < converted.length; i++) {
-		    if (converted[i] != null)
-			cleaned[count++] = converted[i];
-		}
+        for (CFCluster aConverted : converted) {
+            if (aConverted != null)
+                cleaned[count++] = aConverted;
+        }
 
 		return new Clustering(cleaned);
 	}

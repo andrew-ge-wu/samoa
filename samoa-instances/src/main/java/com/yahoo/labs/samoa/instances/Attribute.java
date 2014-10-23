@@ -177,7 +177,7 @@ public class Attribute implements Serializable{
             return -1;
         }
         if (this.valuesStringAttribute == null) {
-            this.valuesStringAttribute = new HashMap<String, Integer>();
+            this.valuesStringAttribute = new HashMap<>();
             int count = 0;
             for (String stringValue : attributeValues) {
                 this.valuesStringAttribute.put(stringValue, count);
@@ -188,18 +188,13 @@ public class Attribute implements Serializable{
         if (val == null) {
             return -1;
         } else {
-            return val.intValue();
+            return val;
         }
     }
 
     @Override
     public String toString() {
-    	StringBuffer text = new StringBuffer();
-        
-        text.append(ARFF_ATTRIBUTE).append(" ").append(Utils.quote(this.name)).append(" ");
-        
-          text.append(ARFF_ATTRIBUTE_NUMERIC);
-        
-        return text.toString();
+
+        return ARFF_ATTRIBUTE + " " + Utils.quote(this.name) + " " + ARFF_ATTRIBUTE_NUMERIC;
     }
 }

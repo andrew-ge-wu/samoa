@@ -22,6 +22,7 @@ package com.yahoo.labs.samoa.moa.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URISyntaxException;
@@ -42,12 +43,12 @@ import java.util.jar.JarFile;
  */
 public class AutoClassDiscovery {
 
-    protected static final Map<String, String[]> cachedClassNames = new HashMap<String, String[]>();
+    protected static final Map<String, String[]> cachedClassNames = new HashMap<>();
 
     public static String[] findClassNames(String packageNameToSearch) {
         String[] cached = cachedClassNames.get(packageNameToSearch);
         if (cached == null) {
-            HashSet<String> classNames = new HashSet<String>();
+            HashSet<String> classNames = new HashSet<>();
             /*StringTokenizer pathTokens = new StringTokenizer(System
             .getProperty("java.class.path"), File.pathSeparator);*/
             String packageDirName = packageNameToSearch.replace('.',
@@ -61,12 +62,12 @@ public class AutoClassDiscovery {
             URLClassLoader sysLoader = (URLClassLoader) adc.getClass().getClassLoader();
             URL[] cl_urls = sysLoader.getURLs();
 
-            for (int i = 0; i < cl_urls.length; i++) {
-                part = cl_urls[i].toString();
+            for (URL cl_url : cl_urls) {
+                part = cl_url.toString();
                 if (part.startsWith("file:")) {
                     part = part.replace(" ", "%20");
                     try {
-                        File temp = new File(new java.net.URI(part));
+                        File temp = new File(new URI(part));
                         part = temp.getAbsolutePath();
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
@@ -74,7 +75,7 @@ public class AutoClassDiscovery {
                 }
 
                 // find classes
-                ArrayList<File> files = new ArrayList<File>();
+                ArrayList<File> files = new ArrayList<>();
                 File dir = new File(part);
                 if (dir.isDirectory()) {
                     File root = new File(dir.toString() + File.separatorChar + packageDirName);
@@ -93,7 +94,7 @@ public class AutoClassDiscovery {
                                             '.');
                                     classNames.add(relativeName.substring(0,
                                             relativeName.length()
-                                            - ".class".length()));
+                                                    - ".class".length()));
                                 }
                             }
                         }
@@ -145,7 +146,7 @@ public class AutoClassDiscovery {
 
     protected static String[] findClassesInDirectoryRecursive(File root,
             String packagePath) {
-        HashSet<String> classNames = new HashSet<String>();
+        HashSet<String> classNames = new HashSet<>();
         if (root.isDirectory()) {
             String[] list = root.list();
             for (String string : list) {
@@ -169,7 +170,7 @@ public class AutoClassDiscovery {
 
     public static Class[] findClassesOfType(String packageNameToSearch,
             Class<?> typeDesired) {
-        ArrayList<Class<?>> classesFound = new ArrayList<Class<?>>();
+        ArrayList<Class<?>> classesFound = new ArrayList<>();
         String[] classNames = findClassNames(packageNameToSearch);
         for (String className : classNames) {
             String fullName = packageNameToSearch.length() > 0 ? (packageNameToSearch

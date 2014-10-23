@@ -63,8 +63,8 @@ public class GiniSplitCriterion extends AbstractOptionHandler implements
 
     public static double computeGini(double[] dist, double distSumOfWeights) {
         double gini = 1.0;
-        for (int i = 0; i < dist.length; i++) {
-            double relFreq = dist[i] / distSumOfWeights;
+        for (double aDist : dist) {
+            double relFreq = aDist / distSumOfWeights;
             gini -= relFreq * relFreq;
         }
         return gini;

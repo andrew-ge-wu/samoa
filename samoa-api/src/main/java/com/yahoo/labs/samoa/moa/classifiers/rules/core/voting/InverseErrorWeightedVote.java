@@ -75,11 +75,10 @@ public class InverseErrorWeightedVote extends AbstractErrorWeightedVote {
 			else
 			{
 				//compute arithmetic vote
-				for (int i=0; i<n; ++i)
-				{
-					for(int j=0; j<d; j++)
-						weightedVote[j]+=votes.get(i)[j]/n;
-				}
+                for (double[] vote : votes) {
+                    for (int j = 0; j < d; j++)
+                        weightedVote[j] += vote[j] / n;
+                }
 			}
 		}
 		return weightedVote;

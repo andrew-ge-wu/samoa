@@ -26,7 +26,7 @@ public class LocalThreadsDoTask {
      */
     public static void main(String[] args) {
 
-        ArrayList<String> tmpArgs = new ArrayList<String>(Arrays.asList(args));
+        ArrayList<String> tmpArgs = new ArrayList<>(Arrays.asList(args));
         
         // Get number of threads for multithreading mode
         int numThreads = 1;
@@ -38,17 +38,17 @@ public class LocalThreadsDoTask {
         			tmpArgs.remove(i);
         		} catch (NumberFormatException e) {
         			System.err.println("Invalid number of threads.");
-        			System.err.println(e.getStackTrace());
+        			System.err.println(Arrays.toString(e.getStackTrace()));
         		}
         	}
         }
         logger.info("Number of threads:{}", numThreads);
         
-        args = tmpArgs.toArray(new String[0]);
+        args = tmpArgs.toArray(new String[tmpArgs.size()]);
 
         StringBuilder cliString = new StringBuilder();
-        for (int i = 0; i < args.length; i++) {
-            cliString.append(" ").append(args[i]);
+        for (String arg : args) {
+            cliString.append(" ").append(arg);
         }
         logger.debug("Command line string = {}", cliString.toString());
         System.out.println("Command line string = " + cliString.toString());

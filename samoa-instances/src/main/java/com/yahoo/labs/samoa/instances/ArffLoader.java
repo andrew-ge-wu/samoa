@@ -102,7 +102,7 @@ public class ArffLoader implements Serializable {
                         if ("?".equals(streamTokenizer.sval)) {
                             value = Double.NaN; //Utils.missingValue();
                         } else if (isNumeric == true) {
-                            value = Double.valueOf(streamTokenizer.sval).doubleValue();
+                            value = Double.valueOf(streamTokenizer.sval);
                         } else {
                             value = this.instanceInformation.attribute(numAttribute).indexOfValue(streamTokenizer.sval);
                         }
@@ -146,8 +146,8 @@ public class ArffLoader implements Serializable {
         Instance instance = new SparseInstance(1.0, null); //(this.instanceInformation.numAttributes() + 1);
         //System.out.println(this.instanceInformation.numAttributes());
         int numAttribute;
-        ArrayList<Double> attributeValues = new ArrayList<Double>();
-        List<Integer> indexValues = new ArrayList<Integer>();
+        ArrayList<Double> attributeValues = new ArrayList<>();
+        List<Integer> indexValues = new ArrayList<>();
         try {
             //while (streamTokenizer.ttype != StreamTokenizer.TT_EOF) {
             streamTokenizer.nextToken(); // Remove the '{' char
@@ -176,7 +176,7 @@ public class ArffLoader implements Serializable {
                             || streamTokenizer.ttype == 34)) {
                         //System.out.print(streamTokenizer.sval + "-");
                         if (attributes.get(numAttribute).isNumeric()) {
-                            this.setSparseValue(instance, indexValues, attributeValues, numAttribute, Double.valueOf(streamTokenizer.sval).doubleValue(), true);
+                            this.setSparseValue(instance, indexValues, attributeValues, numAttribute, Double.valueOf(streamTokenizer.sval), true);
                         } else {
                             this.setSparseValue(instance, indexValues, attributeValues, numAttribute, this.instanceInformation.attribute(numAttribute).indexOfValue(streamTokenizer.sval), false);
                         }
@@ -196,8 +196,8 @@ public class ArffLoader implements Serializable {
         int[] arrayIndexValues = new int[attributeValues.size()];
         double[] arrayAttributeValues = new double[attributeValues.size()];
         for (int i = 0; i < arrayIndexValues.length; i++) {
-            arrayIndexValues[i] = indexValues.get(i).intValue();
-            arrayAttributeValues[i] = attributeValues.get(i).doubleValue();
+            arrayIndexValues[i] = indexValues.get(i);
+            arrayAttributeValues[i] = attributeValues.get(i);
         }
         instance.addSparseValues(arrayIndexValues, arrayAttributeValues, this.instanceInformation.numAttributes());
         return instance;
@@ -249,7 +249,7 @@ public class ArffLoader implements Serializable {
                             || streamTokenizer.ttype == 34)) {
                         //System.out.print(streamTokenizer.sval + "/"+this.instanceInformation.attribute(numAttribute).indexOfValue(streamTokenizer.sval)+" ");
                         if (attributes.get(numAttribute).isNumeric()) {
-                            this.setValue(instance, numAttribute, Double.valueOf(streamTokenizer.sval).doubleValue(), true);
+                            this.setValue(instance, numAttribute, Double.valueOf(streamTokenizer.sval), true);
                         } else {
                             this.setValue(instance, numAttribute, this.instanceInformation.attribute(numAttribute).indexOfValue(streamTokenizer.sval), false);
                             //numAttribute++;
@@ -276,7 +276,7 @@ public class ArffLoader implements Serializable {
 
         String relation = "file stream";
         //System.out.println("RELATION " + relation);
-        attributes = new ArrayList<Attribute>();
+        attributes = new ArrayList<>();
         try {
             streamTokenizer.nextToken();
             while (streamTokenizer.ttype != StreamTokenizer.TT_EOF) {
@@ -301,7 +301,7 @@ public class ArffLoader implements Serializable {
                         //System.out.println("* " + name + ":" + type + " ");
                         if (streamTokenizer.ttype == '{') {
                             streamTokenizer.nextToken();
-                            List<String> attributeLabels = new ArrayList<String>();
+                            List<String> attributeLabels = new ArrayList<>();
                             while (streamTokenizer.ttype != '}') {
 
                                 if (streamTokenizer.sval != null) {

@@ -212,7 +212,7 @@ public class CMM extends MeasureCollection{
             //more then one entry, so look for most similar frequency profile
             int minDiff = Integer.MAX_VALUE;
             if(sumsFC[fc]!=0 && matchIndex == -1){
-                ArrayList<Integer> fitCandidates = new ArrayList<Integer>();
+                ArrayList<Integer> fitCandidates = new ArrayList<>();
                 for (int hc0 = 0; hc0 < numGT0Classes; hc0++) {
                     int errDiff = 0;
                     for (int hc1 = 0; hc1 < numGT0Classes; hc1++) {

@@ -145,7 +145,7 @@ public class AMRulesStatisticsProcessor implements Processor {
 	@Override
 	public void onCreate(int id) {
 		this.processorId = id;
-		this.ruleSet = new LinkedList<ActiveRule>();
+		this.ruleSet = new LinkedList<>();
 	}
 
 	@Override

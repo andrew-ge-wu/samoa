@@ -60,8 +60,6 @@ public class Utils {
 			
 			jo.close();
 			bo.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -73,7 +71,7 @@ public class Utils {
 		System.out.println(System.getProperty("user.dir"));
 		try {
 			String baseDir = System.getProperty("user.dir");
-			List<File> filesArray = new ArrayList<File>();
+			List<File> filesArray = new ArrayList<>();
 			for (String module : modulesNames) {
 				module = "/"+module.replace(".", "/")+".class";
 				filesArray.add(new File(baseDir+module));
@@ -102,8 +100,6 @@ public class Utils {
 
 			jo.close();
 			bo.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -117,28 +113,26 @@ public class Utils {
 			File inputFile = new File(libDir);
 			
 			File[] files = inputFile.listFiles();
-			for (int i = 0; i < files.length; i++) {
-				addEntry(jo, files[i], baseDir, "lib");
-			}
+            for (File file : files) {
+                addEntry(jo, file, baseDir, "lib");
+            }
 			jo.close();
 			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private static void addEntries(JarOutputStream jo, File[] files, String baseDir, String rootDir){
-		for (int i = 0; i < files.length; i++) {
+        for (File file : files) {
 
-			if (!files[i].isDirectory()) {
-				addEntry(jo, files[i], baseDir, rootDir);
-			} else {
-				File dir = new File(files[i].getAbsolutePath());
-				addEntries(jo, dir.listFiles(), baseDir, rootDir);
-			}
-		}
+            if (!file.isDirectory()) {
+                addEntry(jo, file, baseDir, rootDir);
+            } else {
+                File dir = new File(file.getAbsolutePath());
+                addEntries(jo, dir.listFiles(), baseDir, rootDir);
+            }
+        }
 	}
 	
 	private static void addEntry(JarOutputStream jo, File file, String baseDir, String rootDir) {
@@ -155,8 +149,6 @@ public class Utils {
 				jo.write(buf, 0, anz);
 			}
 			bi.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -189,13 +181,9 @@ public class Utils {
 		try {
 			cls = Class.forName(className); 
 			obj = cls.newInstance();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
+		} catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
 			e.printStackTrace();
 		}
-		return obj;
+        return obj;
     }
 }

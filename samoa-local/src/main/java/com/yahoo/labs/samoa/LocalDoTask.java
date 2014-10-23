@@ -70,8 +70,8 @@ public class LocalDoTask {
         Option[] extraOptions = new Option[] { suppressStatusOutOpt, suppressResultOutOpt, statusUpdateFreqOpt };
 
         StringBuilder cliString = new StringBuilder();
-        for (int i = 0; i < args.length; i++) {
-            cliString.append(" ").append(args[i]);
+        for (String arg : args) {
+            cliString.append(" ").append(arg);
         }
         logger.debug("Command line string = {}", cliString.toString());
         System.out.println("Command line string = " + cliString.toString());

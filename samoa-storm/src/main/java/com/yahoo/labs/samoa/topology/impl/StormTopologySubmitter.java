@@ -56,7 +56,7 @@ public class StormTopologySubmitter {
 		List<String> tmpArgs = new ArrayList<>(Arrays.asList(args));
 		int numWorkers = StormSamoaUtils.numWorkers(tmpArgs);
 
-		args = tmpArgs.toArray(new String[0]);
+		args = tmpArgs.toArray(new String[tmpArgs.size()]);
 		StormTopology stormTopo = StormSamoaUtils.argsToTopology(args);
 
 		Config conf = new Config();

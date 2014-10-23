@@ -118,8 +118,8 @@ public class ClustreamKernel extends CFCluster {
     private double getDeviation(){
         double[] variance = getVarianceVector();
         double sumOfDeviation = 0.0;
-        for (int i = 0; i < variance.length; i++) {
-            double d = Math.sqrt(variance[i]);
+        for (double aVariance : variance) {
+            double d = Math.sqrt(aVariance);
             sumOfDeviation += d;
         }
         return sumOfDeviation / variance.length;
@@ -262,8 +262,8 @@ public class ClustreamKernel extends CFCluster {
 
         double[] variance = getVarianceVector();
         double sumOfDeviation = 0.0;
-        for (int i = 0; i < variance.length; i++) {
-            double d = Math.sqrt(variance[i]);
+        for (double aVariance : variance) {
+            double d = Math.sqrt(aVariance);
             sumOfDeviation += d;
         }
 

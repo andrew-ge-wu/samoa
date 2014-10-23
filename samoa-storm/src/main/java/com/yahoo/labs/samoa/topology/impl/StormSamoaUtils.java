@@ -66,9 +66,9 @@ public class StormSamoaUtils {
 	
 	public static StormTopology argsToTopology(String[] args){
 		StringBuilder cliString = new StringBuilder();
-		for (int i = 0; i < args.length; i++) {
-			cliString.append(" ").append(args[i]);
-		}
+        for (String arg : args) {
+            cliString.append(" ").append(arg);
+        }
 		logger.debug("Command line string = {}", cliString.toString());
 
 		Task task = getTask(cliString.toString());

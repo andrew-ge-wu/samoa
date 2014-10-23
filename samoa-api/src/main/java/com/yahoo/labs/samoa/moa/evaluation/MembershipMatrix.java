@@ -51,14 +51,14 @@ public class MembershipMatrix {
         class_sums = new int[numClasses];
         total_entries = 0;
         total_class_entries = points.size();
-        for (int p = 0; p < points.size(); p++) {
-            int worklabel = classmap.get((int)points.get(p).classValue());
+        for (DataPoint point : points) {
+            int worklabel = classmap.get((int) point.classValue());
             //real class distribution
             class_distribution[worklabel]++;
             boolean covered = false;
-            for (int c = 0; c < numCluster-1; c++) {
-                double prob = foundClustering.get(c).getInclusionProbability(points.get(p));
-                if(prob >= 1){
+            for (int c = 0; c < numCluster - 1; c++) {
+                double prob = foundClustering.get(c).getInclusionProbability(point);
+                if (prob >= 1) {
                     cluster_class_weights[c][worklabel]++;
                     class_sums[worklabel]++;
                     cluster_sums[c]++;
@@ -66,10 +66,10 @@ public class MembershipMatrix {
                     covered = true;
                 }
             }
-            if(!covered){
-                cluster_class_weights[numCluster-1][worklabel]++;
+            if (!covered) {
+                cluster_class_weights[numCluster - 1][worklabel]++;
                 class_sums[worklabel]++;
-                cluster_sums[numCluster-1]++;
+                cluster_sums[numCluster - 1]++;
                 total_entries++;
             }
 
@@ -120,26 +120,26 @@ public class MembershipMatrix {
 
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("Membership Matrix\n");
         for (int i = 0; i < cluster_class_weights.length; i++) {
             for (int j = 0; j < cluster_class_weights[i].length; j++) {
-                sb.append(cluster_class_weights[i][j]+"\t ");
+                sb.append(cluster_class_weights[i][j]).append("\t ");
             }
-            sb.append("| "+cluster_sums[i]+"\n");
+            sb.append("| ").append(cluster_sums[i]).append("\n");
         }
         //sb.append("-----------\n");
-        for (int i = 0; i < class_sums.length; i++) {
-            sb.append(class_sums[i]+"\t ");
+        for (int class_sum : class_sums) {
+            sb.append(class_sum).append("\t ");
         }
-        sb.append("| "+total_entries+"\n");
+        sb.append("| ").append(total_entries).append("\n");
 
 
         sb.append("Real class distribution \n");
-        for (int i = 0; i < class_distribution.length; i++) {
-            sb.append(class_distribution[i]+"\t ");
+        for (int aClass_distribution : class_distribution) {
+            sb.append(aClass_distribution).append("\t ");
         }
-        sb.append("| "+total_class_entries+"\n");
+        sb.append("| ").append(total_class_entries).append("\n");
 
         return sb.toString();
     }

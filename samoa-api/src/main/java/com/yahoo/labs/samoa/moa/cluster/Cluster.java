@@ -40,7 +40,7 @@ public abstract class Cluster extends AbstractMOAObject {
 
 
     public Cluster(){
-        this.measure_values = new HashMap<String, String>();
+        this.measure_values = new HashMap<>();
     }
     /**
      * @return the center of the cluster
@@ -140,18 +140,18 @@ public abstract class Cluster extends AbstractMOAObject {
     }
 
     public String getInfo() {
-        ArrayList<String> infoTitle = new ArrayList<String>();
-        ArrayList<String> infoValue = new ArrayList<String>();
+        ArrayList<String> infoTitle = new ArrayList<>();
+        ArrayList<String> infoValue = new ArrayList<>();
         getClusterSpecificInfo(infoTitle, infoValue);
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         //Cluster properties
         sb.append("<html>");
         sb.append("<table>");
         int i = 0;
         while(i < infoTitle.size() && i < infoValue.size()){
-            sb.append("<tr><td>"+infoTitle.get(i)+"</td><td>"+infoValue.get(i)+"</td></tr>");
+            sb.append("<tr><td>").append(infoTitle.get(i)).append("</td><td>").append(infoValue.get(i)).append("</td></tr>");
             i++;
         }
         sb.append("</table>");
@@ -160,10 +160,9 @@ public abstract class Cluster extends AbstractMOAObject {
         sb.append("<br>");
         sb.append("<b>Evaluation</b><br>");
         sb.append("<table>");
-        Iterator miterator = measure_values.entrySet().iterator();
-        while(miterator.hasNext()) {
-             Map.Entry e = (Map.Entry)miterator.next();
-             sb.append("<tr><td>"+e.getKey()+"</td><td>"+e.getValue()+"</td></tr>");
+        for (Object o : measure_values.entrySet()) {
+            Map.Entry e = (Map.Entry) o;
+            sb.append("<tr><td>").append(e.getKey()).append("</td><td>").append(e.getValue()).append("</td></tr>");
         }
         sb.append("</table>");
         sb.append("</html>");

@@ -94,7 +94,7 @@ public class TopologyBuilder {
     public ProcessingItem addProcessor(Processor processor, int parallelism) {
         ProcessingItem pi = createPi(processor, parallelism);
         if (this.mapProcessorToProcessingItem == null)
-            this.mapProcessorToProcessingItem = new HashMap<Processor, IProcessingItem>();
+            this.mapProcessorToProcessingItem = new HashMap<>();
         this.mapProcessorToProcessingItem.put(processor, pi);
         return pi;
     }
@@ -161,7 +161,7 @@ public class TopologyBuilder {
     public EntranceProcessingItem addEntranceProcessor(EntranceProcessor entranceProcessor) {
         EntranceProcessingItem pi = createEntrancePi(entranceProcessor);
         if (this.mapProcessorToProcessingItem == null)
-            this.mapProcessorToProcessingItem = new HashMap<Processor, IProcessingItem>();
+            this.mapProcessorToProcessingItem = new HashMap<>();
         mapProcessorToProcessingItem.put(entranceProcessor, pi);
         return pi;
     }
@@ -206,7 +206,7 @@ public class TopologyBuilder {
         EntranceProcessingItem epi = this.componentFactory.createEntrancePi(processor);
         this.topology.addEntranceProcessingItem(epi);
         if (this.mapProcessorToProcessingItem == null)
-            this.mapProcessorToProcessingItem = new HashMap<Processor, IProcessingItem>();
+            this.mapProcessorToProcessingItem = new HashMap<>();
         this.mapProcessorToProcessingItem.put(processor, epi);
         return epi;
     }

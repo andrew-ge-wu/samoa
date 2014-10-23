@@ -49,9 +49,9 @@ public class SSQ extends MeasureCollection {
     public void evaluateClusteringSamoa(Clustering clustering,
             Clustering trueClsutering, ArrayList<Instance> points) {
         double sum = 0.0;
-        for (int p = 0; p < points.size(); p++) {
+        for (Instance point : points) {
             // don't include noise
-            if (points.get(p).classValue() == -1) {
+            if (point.classValue() == -1) {
                 continue;
             }
 
@@ -60,7 +60,7 @@ public class SSQ extends MeasureCollection {
                 double distance = 0.0;
                 double[] center = clustering.get(c).getCenter();
                 for (int i = 0; i < center.length; i++) {
-                    double d = points.get(p).value(i) - center[i];
+                    double d = point.value(i) - center[i];
                     distance += d * d;
                 }
                 minDistance = Math.min(distance, minDistance);
@@ -75,22 +75,22 @@ public class SSQ extends MeasureCollection {
     @Override
      public void evaluateClustering(Clustering clustering, Clustering trueClsutering, ArrayList<DataPoint> points) {
         double sum = 0.0;
-        for (int p = 0; p < points.size(); p++) {
+        for (DataPoint point : points) {
             //don't include noise
-            if(points.get(p).classValue()==-1) continue;
+            if (point.classValue() == -1) continue;
 
             double minDistance = Double.MAX_VALUE;
             for (int c = 0; c < clustering.size(); c++) {
                 double distance = 0.0;
                 double[] center = clustering.get(c).getCenter();
                 for (int i = 0; i < center.length; i++) {
-                    double d = points.get(p).value(i) - center[i];
+                    double d = point.value(i) - center[i];
                     distance += d * d;
                 }
                 minDistance = Math.min(distance, minDistance);
             }
-            
-            sum+=minDistance;
+
+            sum += minDistance;
         }
         
         addValue(0,sum);

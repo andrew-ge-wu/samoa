@@ -69,7 +69,7 @@ final class FilterProcessor implements Processor {
         
         private int batchSize = 200;
                 
-        private List<InstanceContentEvent> contentEventList = new LinkedList<InstanceContentEvent>();
+        private List<InstanceContentEvent> contentEventList = new LinkedList<>();
         
 	@Override
 	public boolean process(ContentEvent event) {    
@@ -124,9 +124,7 @@ final class FilterProcessor implements Processor {
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		return sb.toString();
+        return super.toString();
 	}
 	
 	void setOutputStream(Stream outputStream){

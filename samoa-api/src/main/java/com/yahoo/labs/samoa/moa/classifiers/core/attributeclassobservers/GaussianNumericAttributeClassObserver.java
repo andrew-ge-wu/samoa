@@ -53,7 +53,7 @@ public class GaussianNumericAttributeClassObserver extends AbstractOptionHandler
 
     protected DoubleVector maxValueObservedPerClass = new DoubleVector();
 
-    protected AutoExpandVector<GaussianEstimator> attValDistPerClass = new AutoExpandVector<GaussianEstimator>();
+    protected AutoExpandVector<GaussianEstimator> attValDistPerClass = new AutoExpandVector<>();
 
     /**
      * @param classVal
@@ -115,7 +115,7 @@ public class GaussianNumericAttributeClassObserver extends AbstractOptionHandler
     }
 
     public double[] getSplitPointSuggestions() {
-        Set<Double> suggestedSplitValues = new TreeSet<Double>();
+        Set<Double> suggestedSplitValues = new TreeSet<>();
         double minValue = Double.POSITIVE_INFINITY;
         double maxValue = Double.NEGATIVE_INFINITY;
         for (int i = 0; i < this.attValDistPerClass.size(); i++) {

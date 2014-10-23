@@ -58,7 +58,7 @@ public class DenseInstance extends SingleLabelInstance {
     
     @Override
     public String toString() {
-    	 StringBuffer text = new StringBuffer();
+    	 StringBuilder text = new StringBuilder();
 
     	    for (int i = 0; i < this.instanceInformation.numAttributes(); i++) {
     	      if (i > 0)

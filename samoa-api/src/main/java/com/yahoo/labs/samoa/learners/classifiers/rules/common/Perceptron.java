@@ -344,11 +344,11 @@ public class Perceptron extends AbstractClassifier implements Regressor {
 	}
 
 	public void normalizeWeights(){
-		double sumWeights = 0.0;                
+		double sumWeights = 0.0;
 
-		for (int j = 0; j < this.weightAttribute.length ; j++) {
-			sumWeights += Math.abs(this.weightAttribute[j]);
-		}
+        for (double aWeightAttribute : this.weightAttribute) {
+            sumWeights += Math.abs(aWeightAttribute);
+        }
 		for (int j = 0; j < this.weightAttribute.length; j++) {
 			this.weightAttribute[j] = this.weightAttribute[j] / sumWeights;
 		}       
@@ -388,14 +388,14 @@ public class Perceptron extends AbstractClassifier implements Regressor {
 			for(int i=0; i< this.weightAttribute.length-1; ++i)
 			{
 				if(this.weightAttribute[i]>=0 && i>0)
-					out.append(" +" + Math.round(this.weightAttribute[i]*1000)/1000.0 + " X" + i );
+					out.append(" +").append(Math.round(this.weightAttribute[i] * 1000) / 1000.0).append(" X").append(i);
 				else
-					out.append(" " + Math.round(this.weightAttribute[i]*1000)/1000.0 + " X" + i );
+					out.append(" ").append(Math.round(this.weightAttribute[i] * 1000) / 1000.0).append(" X").append(i);
 			}
 			if(this.weightAttribute[this.weightAttribute.length-1]>=0 )
-				out.append(" +" + Math.round(this.weightAttribute[this.weightAttribute.length-1]*1000)/1000.0);
+				out.append(" +").append(Math.round(this.weightAttribute[this.weightAttribute.length - 1] * 1000) / 1000.0);
 			else
-				out.append(" " + Math.round(this.weightAttribute[this.weightAttribute.length-1]*1000)/1000.0);
+				out.append(" ").append(Math.round(this.weightAttribute[this.weightAttribute.length - 1] * 1000) / 1000.0);
 		}       
 	}
 

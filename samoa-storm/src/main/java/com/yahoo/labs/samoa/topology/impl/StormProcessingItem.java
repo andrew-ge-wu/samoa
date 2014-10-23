@@ -127,7 +127,7 @@ class StormProcessingItem extends AbstractProcessingItem implements StormTopolog
 		private OutputCollector collector;
 		
 		ProcessingItemBolt(Processor processor){
-			this.streams = new HashSet<StormBoltStream>();
+			this.streams = new HashSet<>();
 			this.processor = processor;
 		}
 		

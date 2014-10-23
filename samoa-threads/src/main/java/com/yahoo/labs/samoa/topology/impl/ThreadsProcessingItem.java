@@ -90,7 +90,7 @@ public class ThreadsProcessingItem extends AbstractProcessingItem {
 	 * setup and connected to the respective streams) and before events are sent.
 	 */
 	public void setupInstances() {
-		this.piInstances = new ArrayList<ThreadsProcessingItemInstance>(this.getParallelism());
+		this.piInstances = new ArrayList<>(this.getParallelism());
 		for (int i=0; i<this.getParallelism(); i++) {
 			Processor newProcessor = this.getProcessor().newProcessor(this.getProcessor());
 			newProcessor.onCreate(i + 1);

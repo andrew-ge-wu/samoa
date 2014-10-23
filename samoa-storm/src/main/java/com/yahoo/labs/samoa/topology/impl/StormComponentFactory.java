@@ -40,7 +40,7 @@ public final class StormComponentFactory implements ComponentFactory {
     private final Map<String, Integer> processorList;
 
     public StormComponentFactory() {
-        processorList = new HashMap<String, Integer>();
+        processorList = new HashMap<>();
     }
 
     @Override
@@ -71,7 +71,7 @@ public final class StormComponentFactory implements ComponentFactory {
         Integer index = 0;
 
         if (!processorList.containsKey(key)) {
-            index = Integer.valueOf(1);
+            index = 1;
         } else {
             index = processorList.get(key) + 1;
         }

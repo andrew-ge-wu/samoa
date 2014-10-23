@@ -59,7 +59,7 @@ public class Separation extends MeasureCollection {
 
         if (trueClustering != null) {
             String s = "";
-            List<Instance> listInstances = new ArrayList<Instance>();
+            List<Instance> listInstances = new ArrayList<>();
             for (Cluster c : trueClustering.getClustering()) {
                 DenseInstance inst = new DenseInstance(c.getWeight(), c.getCenter());
                 listInstances.add(inst);
@@ -108,7 +108,7 @@ public class Separation extends MeasureCollection {
 
         if (trueClustering != null) {
             String s = "";
-            List<Instance> listInstances = new ArrayList<Instance>();
+            List<Instance> listInstances = new ArrayList<>();
             for (Cluster c : trueClustering.getClustering()) {
                 DenseInstance inst = new DenseInstance(c.getWeight(), c.getCenter());
                 listInstances.add(inst);
